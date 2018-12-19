@@ -1,6 +1,7 @@
 package tr.com.homesoft.wetherapp.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,6 +10,8 @@ import org.threeten.bp.ZonedDateTime
 import tr.com.homesoft.wetherapp.data.local.dao.CurrentWeatherDao
 import tr.com.homesoft.wetherapp.data.local.dao.LocationDao
 import tr.com.homesoft.wetherapp.data.local.dao.WeeklyWeatherDao
+import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.LocationProvider
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
@@ -36,6 +39,20 @@ class ForecastRepositoryImpl(
         }
     }
 
+    override fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry> {
+        val weatherByDate = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
+        CoroutineScope(Dispatchers.Main).launch {
+            val data = withContext(Dispatchers.IO) {
+                with(weeklyWeatherDao) {
+                    if (metric) findMetricByDate(date) else findImperialByDate(date)
+                }
+            }
+            weatherByDate.removeSource(data)
+            weatherByDate.addSource(data) {weatherByDate.value = it}
+        }
+        return weatherByDate
+    }
+/*
     override suspend fun getWeatherByDate(
         date: String
     ): LiveData<out UnitSpecificWeeklyForecastEntry> =
@@ -44,25 +61,75 @@ class ForecastRepositoryImpl(
                 date
             )
         }
+*/
 
+    /*
     override suspend fun getCurrentWeather() =
         withContext(Dispatchers.IO) {
             initWeatherData()
             return@withContext if (metric) currentWeatherDao.weatherMetric else currentWeatherDao.weatherImperial
         }
-
+    */
+    /*
     override suspend fun getWeeklyWeather() =
         withContext(Dispatchers.IO) {
             initWeatherData()
             return@withContext if (metric) weeklyWeatherDao.metricWeeklyForecast else weeklyWeatherDao.imperialWeatherForecast
         }
+    */
+
+    override val weeklyWeather: LiveData<out List<UnitSpecificWeeklyForecastEntry>>
+        get() {
+            val weekly = MediatorLiveData<List<UnitSpecificWeeklyForecastEntry>>()
+            CoroutineScope(Dispatchers.Main).launch {
+                val unitSpecificData = withContext(Dispatchers.IO) {
+                    initWeatherData()
+                    with(weeklyWeatherDao) {
+                        if (metric) metricWeeklyForecast else imperialWeatherForecast
+                    }
+                }
+                weekly.removeSource(unitSpecificData)
+                weekly.addSource(unitSpecificData) {weekly.value = it}
+            }
+
+            return weekly
+        }
+
+    override val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
+        get() {
+            val current = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
+            CoroutineScope(Dispatchers.Main).launch {
+                val unitSpecificData = withContext(Dispatchers.IO) {
+                    initWeatherData()
+                    if (metric) currentWeatherDao.weatherMetric
+                    else currentWeatherDao.weatherImperial
+                }
+                current.removeSource(unitSpecificData)
+                current.addSource(unitSpecificData) { current.value = (it) }
+            }
+            return current
+        }
 
 
+    override val location: LiveData<Location>
+        get() {
+            val loc = MediatorLiveData<Location>()
+            CoroutineScope(Dispatchers.Main).launch {
+                val locationData = withContext(Dispatchers.IO) {locationDao.weatherLocation}
+                loc.addSource(locationData) {
+                    loc.value = (it)
+                    loc.removeSource(locationData)
+                }
+            }
+            return loc
+        }
+
+/*
     override suspend fun getLocation() =
         withContext(Dispatchers.IO) {
             return@withContext locationDao.weatherLocation
         }
-
+*/
 
     private fun persistFetchedCurrentWeather(fetchedCurrentWeather: WeatherResponse) {
         CoroutineScope(Dispatchers.IO).launch {

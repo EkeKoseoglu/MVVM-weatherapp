@@ -9,7 +9,11 @@ class FutureDetailViewModel(private val repository: ForecastRepository) : ViewMo
 
     lateinit var loading: LiveData<Boolean>
 
-    internal suspend fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
+    internal fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
 
-    internal suspend fun getLocation() = repository.getLocation()
+    //internal suspend fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
+
+    //internal suspend fun getLocation() = repository.getLocation()
+
+    internal val location = repository.location
 }

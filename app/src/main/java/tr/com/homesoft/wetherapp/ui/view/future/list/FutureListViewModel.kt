@@ -5,7 +5,11 @@ import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 
 class FutureListViewModel(private val repository: ForecastRepository) : ViewModel() {
 
-    internal suspend fun getWeeklyForecast() = repository.getWeeklyWeather()
+    //internal suspend fun getWeeklyForecast() = repository.getWeeklyWeather()
 
-    internal suspend fun getLocation() = repository.getLocation()
+    //internal suspend fun getLocation() = repository.getLocation()
+
+    internal val location = repository.location
+
+    internal val weeklyWeather = repository.weeklyWeather
 }

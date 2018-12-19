@@ -64,6 +64,17 @@ class FutureListFragment : ScopedFragment() {
     private fun bindUI() = launch {
 
         with(viewModel) {
+            weeklyWeather.observe(viewLifecycleOwner, Observer {
+                if (null == it) return@Observer
+
+                binding.loading = false
+
+                with(forecastAdapter) {
+                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                    forecastDataList = it
+                }
+            })
+            /*
             getWeeklyForecast().observe(viewLifecycleOwner, Observer {
 
                 if (null == it) return@Observer
@@ -75,7 +86,8 @@ class FutureListFragment : ScopedFragment() {
                     forecastDataList = it
                 }
             })
-
+            */
+/*
             getLocation().observe(viewLifecycleOwner, Observer { location ->
                 (activity as AppCompatActivity).apply {
 
@@ -83,6 +95,18 @@ class FutureListFragment : ScopedFragment() {
                         with(it) {
                             setSubtitle(R.string.weekly)
                             title = location.name
+                        }
+                    }
+                }
+            })
+  */
+            location.observe(viewLifecycleOwner, Observer {
+                (activity as AppCompatActivity).apply {
+
+                    supportActionBar?.let { actionBar ->
+                        with(actionBar) {
+                            setSubtitle(R.string.weekly)
+                            title = it.name
                         }
                     }
                 }

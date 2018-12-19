@@ -7,11 +7,19 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWee
 
 interface ForecastRepository {
 
-    suspend fun getLocation(): LiveData<Location>
+    val location: LiveData<Location>
 
-    suspend fun getCurrentWeather(): LiveData<out UnitSpecificCurrentWeatherEntry>
+    val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
 
-    suspend fun getWeeklyWeather(): LiveData<out List<UnitSpecificWeeklyForecastEntry>>
+    val weeklyWeather: LiveData<out List<UnitSpecificWeeklyForecastEntry>>
 
-    suspend fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
+    fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
+
+    //suspend fun getLocation(): LiveData<Location>
+
+    //suspend fun getCurrentWeather(): LiveData<out UnitSpecificCurrentWeatherEntry>
+
+    //suspend fun getWeeklyWeather(): LiveData<out List<UnitSpecificWeeklyForecastEntry>>
+
+    //suspend fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
 }

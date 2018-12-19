@@ -14,6 +14,7 @@ import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
 import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.util.extensions.logd
 
 class CurrentFragment : ScopedFragment() {
 
@@ -44,6 +45,7 @@ class CurrentFragment : ScopedFragment() {
     private fun bindUI() = launch {
 
         with(viewModel) {
+/*
             getCurrentWeather().observe(viewLifecycleOwner, Observer {
 
                 if (null == it) return@Observer
@@ -55,7 +57,19 @@ class CurrentFragment : ScopedFragment() {
                 }
 
             })
+*/
+            currentWeather.observe(viewLifecycleOwner, Observer {
+                if (null == it) return@Observer
 
+                with(binding) {
+                    loading = false
+                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                    currentWeather = it
+                }
+            })
+
+
+            /*
             getLoation().observe(viewLifecycleOwner, Observer { location ->
                 if (null == location) return@Observer
                 (activity as AppCompatActivity).apply {
@@ -68,6 +82,22 @@ class CurrentFragment : ScopedFragment() {
                     }
                 }
 
+            })
+            */
+
+            location.observe(viewLifecycleOwner, Observer { loc ->
+
+                if (null ==loc) return@Observer
+
+                (activity as AppCompatActivity).apply {
+
+                    supportActionBar?.let {
+                        with(it) {
+                            setSubtitle(R.string.today)
+                            title = loc.name
+                        }
+                    }
+                }
             })
 
 

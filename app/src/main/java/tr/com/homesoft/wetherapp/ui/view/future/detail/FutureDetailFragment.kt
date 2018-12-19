@@ -51,6 +51,8 @@ class FutureDetailFragment : ScopedFragment() {
     private fun bindUI() = launch {
 
         with(viewModel) {
+
+
             val forecast = getForecastByDate(date)
 
             forecast.observe(viewLifecycleOwner, Observer {
@@ -65,6 +67,7 @@ class FutureDetailFragment : ScopedFragment() {
                 }
             })
 
+            /*
             getLocation().observe(viewLifecycleOwner, Observer { location ->
                 (activity as AppCompatActivity).apply {
 
@@ -72,6 +75,19 @@ class FutureDetailFragment : ScopedFragment() {
                         with(it) {
                             subtitle = date
                             title = location.name
+                        }
+                    }
+                }
+            })
+            */
+            location.observe(viewLifecycleOwner, Observer {
+                (activity as AppCompatActivity).apply {
+
+                    supportActionBar?.let { actionBar ->
+                        with(actionBar) {
+                            subtitle = date
+
+                            title = it.name
                         }
                     }
                 }
