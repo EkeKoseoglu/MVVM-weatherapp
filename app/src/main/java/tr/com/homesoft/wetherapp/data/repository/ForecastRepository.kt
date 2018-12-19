@@ -1,0 +1,17 @@
+package tr.com.homesoft.wetherapp.data.repository
+
+import androidx.lifecycle.LiveData
+import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
+import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
+
+interface ForecastRepository {
+
+    suspend fun getLocation(): LiveData<Location>
+
+    suspend fun getCurrentWeather(): LiveData<out UnitSpecificCurrentWeatherEntry>
+
+    suspend fun getWeeklyWeather(): LiveData<out List<UnitSpecificWeeklyForecastEntry>>
+
+    suspend fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
+}

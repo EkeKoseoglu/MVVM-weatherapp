@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/today" android:icon="@drawable/ic_today" android:id="@+id/currentFragment"/>
+    <item android:title="@string/weekly" android:icon="@drawable/ic_today" android:id="@+id/futureListFragment"/>
+    <item android:title="@string/settings" android:icon="@drawable/ic_settings" android:id="@+id/settings"/>
+</menu>
