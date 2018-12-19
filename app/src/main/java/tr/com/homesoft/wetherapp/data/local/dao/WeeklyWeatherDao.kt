@@ -16,6 +16,9 @@ interface WeeklyWeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertAll(vararg data: WeeklyForecastEntry)
 
+    @Query("DELETE FROM $WEEKLY_FORECAST_TABLE_NAME")
+    fun deleteAll()
+
     @get:Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME")
     val metricWeeklyForecast: LiveData<List<MetricWeeklyForecastEntry>>
 

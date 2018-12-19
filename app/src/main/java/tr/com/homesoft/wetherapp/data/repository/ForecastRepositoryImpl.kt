@@ -68,6 +68,7 @@ class ForecastRepositoryImpl(
         CoroutineScope(Dispatchers.IO).launch {
             locationDao.upsert(fetchedCurrentWeather.location)
             currentWeatherDao.upsert(fetchedCurrentWeather.currentWeatherEntry)
+            weeklyWeatherDao.deleteAll()
             weeklyWeatherDao.upsertAll(*fetchedCurrentWeather.forecast.weeklyForcastList.toTypedArray())
         }
     }
