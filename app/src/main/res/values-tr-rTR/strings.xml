@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="today">Bugün</string>
+    <string name="weekly">Gelecek hafta</string>
+    <string name="settings">Ayarlar</string>
+    <string name="loading">Yükleniyor</string>
+    <string name="wind_label">Rüzgar :</string>
+    <string name="pressure_label">Basınç :</string>
+    <string name="visiblity_label">Görüş mesafesi :</string>
+    <string name="humidity_label">Nem :</string>
+    <string name="precip_label">Yağış :</string>
+    <string name="pref_location_title">Konum</string>
+    <string name="pref_switch_title">Telefonun konumunu kullan</string>
+    <string name="pref_switch_summary">Uygulamanın telefonun konumunu kullanmasına izin ver</string>
+    <string name="preference_unit_category_title">Birim</string>
+    <string name="preference_location_category_title">Hava Durumu Konumu</string>
+    <string name="pref_unit_system_title">Ölçü Birimi</string>
+    <string name="pref_units_label_metric">Metre</string>
+    <string name="pref_units_label_imperial">İngiliz sistemi</string>
+    <string name="format_min_max_temp_metric">Min: <xliff:g>%1$1.1f\u00b0</xliff:g>C, Maks: <xliff:g>%2$1.1f\u00b0</xliff:g>C</string>
+    <string name="format_min_max_temp_imperial">"Min: <xliff:g>%1$1.1f\u00b0</xliff:g>F, Maks: <xliff:g>%2$1.1f\u00b0</xliff:g>F</string>
+    <string name="feels_like_temp_metric">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>C</string>
+    <string name="feels_like_temp_imperial">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>F</string>
+</resources>
