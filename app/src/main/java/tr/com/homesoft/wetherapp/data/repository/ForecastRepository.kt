@@ -9,7 +9,7 @@ interface ForecastRepository {
 
     val location: LiveData<Location>
 
-    val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
+    val currentWeather: LiveData< UnitSpecificCurrentWeatherEntry>
 
     val weeklyWeather: LiveData<out List<UnitSpecificWeeklyForecastEntry>>
 

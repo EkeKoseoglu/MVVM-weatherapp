@@ -95,7 +95,7 @@ class ForecastRepositoryImpl(
             return weekly
         }
 
-    override val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
+    override val currentWeather: LiveData< UnitSpecificCurrentWeatherEntry>
         get() {
             val current = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
             CoroutineScope(Dispatchers.Main).launch {

@@ -37,6 +37,7 @@ class CurrentFragment : Fragment() {
 
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
+            vm = viewModel
             loading = true
         }
 
@@ -64,8 +65,8 @@ class CurrentFragment : Fragment() {
 
                 with(binding) {
                     loading = false
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    currentWeather = it
+                    //isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                    //currentWeather = it
                 }
             })
 
