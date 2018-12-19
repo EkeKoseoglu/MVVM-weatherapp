@@ -6,9 +6,6 @@ import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 
 class FutureDetailViewModel(private val repository: ForecastRepository) : ViewModel() {
 
-
-    lateinit var loading: LiveData<Boolean>
-
     internal fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
 
     //internal suspend fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
