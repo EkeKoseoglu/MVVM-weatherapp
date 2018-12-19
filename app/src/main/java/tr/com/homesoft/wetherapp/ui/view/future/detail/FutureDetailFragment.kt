@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
@@ -17,7 +18,7 @@ import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
-class FutureDetailFragment : ScopedFragment() {
+class FutureDetailFragment : Fragment() {
 
     private val unitProvider: UnitProvider by inject()
 
@@ -40,7 +41,7 @@ class FutureDetailFragment : ScopedFragment() {
         date = FutureDetailFragmentArgs.fromBundle(arguments).date
 
         with(binding) {
-            viewModel.loading = MutableLiveData<Boolean>().apply { value = true }
+
             isLoading = true
             setLifecycleOwner(this@FutureDetailFragment.activity)
         }
@@ -48,7 +49,7 @@ class FutureDetailFragment : ScopedFragment() {
         bindUI()
     }
 
-    private fun bindUI() = launch {
+    private fun bindUI() {
 
         with(viewModel) {
 
@@ -56,9 +57,6 @@ class FutureDetailFragment : ScopedFragment() {
             val forecast = getForecastByDate(date)
 
             forecast.observe(viewLifecycleOwner, Observer {
-
-                //val isLoading = Transformations.map(forecast) { f -> f == null }
-                //(loading as MutableLiveData).value = isLoading.value
 
                 with(binding) {
                     isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC

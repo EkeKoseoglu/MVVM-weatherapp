@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -16,7 +17,7 @@ import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 import tr.com.homesoft.wetherapp.util.extensions.logd
 
-class CurrentFragment : ScopedFragment() {
+class CurrentFragment : Fragment() {
 
     private val unitProvider: UnitProvider by inject()
 
@@ -42,7 +43,7 @@ class CurrentFragment : ScopedFragment() {
         bindUI()
     }
 
-    private fun bindUI() = launch {
+    private fun bindUI()  {
 
         with(viewModel) {
 /*

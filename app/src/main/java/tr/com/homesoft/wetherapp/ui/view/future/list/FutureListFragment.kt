@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
-class FutureListFragment : ScopedFragment() {
+class FutureListFragment : Fragment() {
 
     private val unitProvider: UnitProvider by inject()
 
@@ -61,7 +62,7 @@ class FutureListFragment : ScopedFragment() {
         bindUI()
     }
 
-    private fun bindUI() = launch {
+    private fun bindUI(){
 
         with(viewModel) {
             weeklyWeather.observe(viewLifecycleOwner, Observer {
