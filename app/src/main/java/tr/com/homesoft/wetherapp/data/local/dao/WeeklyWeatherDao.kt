@@ -19,6 +19,7 @@ interface WeeklyWeatherDao {
     @Query("DELETE FROM $WEEKLY_FORECAST_TABLE_NAME")
     fun deleteAll()
 
+    //Return value of the query can be accessed as a property
     @get:Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME")
     val metricWeeklyForecast: LiveData<List<MetricWeeklyForecastEntry>>
 

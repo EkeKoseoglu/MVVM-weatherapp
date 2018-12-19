@@ -17,6 +17,7 @@ interface CurrentWeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(currentWeatherEntry: CurrentWeatherEntry)
 
+    //Return value of the query can be accessed as a property
     @get:Query("SELECT * FROM $CURRENT_WEATHER_TABLE_NAME WHERE $COLUMN_ID = $CURRENT_WEATHER_ID")
     val weatherMetric: LiveData<MetricCurrentWeatherEntry>
 

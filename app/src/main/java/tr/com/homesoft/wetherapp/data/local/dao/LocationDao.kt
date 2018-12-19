@@ -15,6 +15,7 @@ interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(location: Location)
 
+    //Return value of the query can be accessed as a property
     @get:Query("SELECT * FROM $WEATHER_LOCATION_TABLE WHERE $COLUMN_ID = $WEATHER_LOCATION_ID")
     val weatherLocation: LiveData<Location>
 
