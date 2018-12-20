@@ -1,5 +1,6 @@
 package tr.com.homesoft.wetherapp.ui.view.future.list
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 
@@ -12,4 +13,6 @@ class FutureListViewModel(private val repository: ForecastRepository) : ViewMode
     internal val location = repository.location
 
     internal val weeklyWeather = repository.weeklyWeather
+
+    val loading = MutableLiveData<Boolean>()
 }

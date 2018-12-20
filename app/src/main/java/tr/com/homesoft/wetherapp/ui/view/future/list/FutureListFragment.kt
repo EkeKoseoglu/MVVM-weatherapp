@@ -56,6 +56,7 @@ class FutureListFragment : Fragment() {
 
         with(binding) {
             setLifecycleOwner(this@FutureListFragment.activity)
+            vm = viewModel.apply { loading.value = true }
             loading = true
         }
 
@@ -68,7 +69,8 @@ class FutureListFragment : Fragment() {
             weeklyWeather.observe(viewLifecycleOwner, Observer {
                 if (null == it) return@Observer
 
-                binding.loading = false
+                loading.value = false
+                //binding.loading = false
 
                 with(forecastAdapter) {
                     isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC

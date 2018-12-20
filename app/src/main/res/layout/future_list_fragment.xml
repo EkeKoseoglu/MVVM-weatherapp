@@ -4,6 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable name="loading" type="Boolean"/>
+        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.future.list.FutureListViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
                 android:id="@+id/group_loading"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/forecast_rv"
-                android:visibility="@{safeUnbox(loading)}"/>
+                android:visibility="@{safeUnbox(vm.loading)}"/>
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"
