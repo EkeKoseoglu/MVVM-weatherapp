@@ -37,7 +37,6 @@ class CurrentFragment : Fragment() {
 
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
-            vm = viewModel
             loading = true
         }
 
@@ -47,9 +46,20 @@ class CurrentFragment : Fragment() {
     private fun bindUI()  {
 
         with(viewModel) {
-/*
-            getCurrentWeather().observe(viewLifecycleOwner, Observer {
+            /*
+                        getCurrentWeather().observe(viewLifecycleOwner, Observer {
 
+                            if (null == it) return@Observer
+
+                            with(binding) {
+                                loading = false
+                                isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                                currentWeather = it
+                            }
+
+                        })
+            */
+            currentWeather.observe(viewLifecycleOwner, Observer {
                 if (null == it) return@Observer
 
                 with(binding) {
@@ -57,26 +67,8 @@ class CurrentFragment : Fragment() {
                     isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
                     currentWeather = it
                 }
-
             })
-*/
-            /*
-            currentWeather.observe(viewLifecycleOwner, Observer {
-                if (null == it) return@Observer
 
-                with(binding) {
-                    loading = false
-                    //isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    //currentWeather = it
-                }
-
-            })
-*/
-            currentWeather.observe(viewLifecycleOwner, Observer {
-
-                if (null == it) return@Observer
-                binding.loading = false
-            })
 
             /*
             getLoation().observe(viewLifecycleOwner, Observer { location ->

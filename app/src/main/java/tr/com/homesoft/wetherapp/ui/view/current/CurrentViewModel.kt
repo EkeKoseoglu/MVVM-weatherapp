@@ -1,15 +1,9 @@
 package tr.com.homesoft.wetherapp.ui.view.current
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
-import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
-class CurrentViewModel(repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
+class CurrentViewModel(repository: ForecastRepository) : ViewModel() {
 
     //internal suspend fun getCurrentWeather() = repository.getCurrentWeather()
 
@@ -17,15 +11,6 @@ class CurrentViewModel(repository: ForecastRepository, unitProvider: UnitProvide
 
     internal val location = repository.location
 
-    //internal val currentWeather = repository.currentWeather
-
-    private val mUnitSystem = MutableLiveData<UnitSystem>()
-    val metric = Transformations.map(mUnitSystem) { value -> value == UnitSystem.METRIC}!!
-
-    val currentWeather: LiveData<UnitSpecificCurrentWeatherEntry> = Transformations.switchMap(metric) { isMetric -> repository.getCurrentWeather(isMetric)}
-
-    init {
-        mUnitSystem.value = unitProvider.getUnitSystem()
-    }
+    internal val currentWeather = repository.currentWeather
 
 }

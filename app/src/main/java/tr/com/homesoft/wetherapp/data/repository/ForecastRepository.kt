@@ -9,13 +9,11 @@ interface ForecastRepository {
 
     val location: LiveData<Location>
 
-    val currentWeather: LiveData< UnitSpecificCurrentWeatherEntry>
+    val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
 
     val weeklyWeather: LiveData<out List<UnitSpecificWeeklyForecastEntry>>
 
     fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
-
-    fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry>
 
     //suspend fun getLocation(): LiveData<Location>
 
