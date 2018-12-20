@@ -60,6 +60,7 @@ class CurrentFragment : Fragment() {
 
             })
 */
+            /*
             currentWeather.observe(viewLifecycleOwner, Observer {
                 if (null == it) return@Observer
 
@@ -70,7 +71,12 @@ class CurrentFragment : Fragment() {
                 }
 
             })
+*/
+            currentWeather.observe(viewLifecycleOwner, Observer {
 
+                if (null == it) return@Observer
+                binding.loading = false
+            })
 
             /*
             getLoation().observe(viewLifecycleOwner, Observer { location ->

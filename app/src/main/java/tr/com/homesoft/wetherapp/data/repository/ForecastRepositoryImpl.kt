@@ -25,13 +25,14 @@ class ForecastRepositoryImpl(
     private val weeklyWeatherDao: WeeklyWeatherDao,
     private val locationDao: LocationDao,
     private val weatherNetworkDataSource: WeatherNetworkDataSource,
-    private val unitProvider: UnitProvider,
+    //private val unitProvider: UnitProvider,
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
-    private val metric: Boolean
-        get() = unitProvider.getUnitSystem() == UnitSystem.METRIC
-
+    /*
+  private val metric: Boolean
+      get() = unitProvider.getUnitSystem() == UnitSystem.METRIC
+  */
 
     init {
         weatherNetworkDataSource.downloadedCurrentWeather.observeForever { newCurrentWeather ->
@@ -39,12 +40,32 @@ class ForecastRepositoryImpl(
         }
     }
 
+    override fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry> {
+        val current = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
+        CoroutineScope(Dispatchers.Main).launch {
+            val unitSpecificData = withContext(Dispatchers.IO) {
+                initWeatherData()
+                /*
+                if (metric) currentWeatherDao.weatherMetric
+                else currentWeatherDao.weatherImperial
+                */
+                currentWeatherDao.weatherMetric
+            }
+            current.removeSource(unitSpecificData)
+            current.addSource(unitSpecificData) { current.value = (it) }
+        }
+        return current
+    }
+
+
+
     override fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry> {
         val weatherByDate = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
         CoroutineScope(Dispatchers.Main).launch {
             val data = withContext(Dispatchers.IO) {
                 with(weeklyWeatherDao) {
-                    if (metric) findMetricByDate(date) else findImperialByDate(date)
+                    //if (metric) findMetricByDate(date) else findImperialByDate(date)
+                    findImperialByDate(date)
                 }
             }
             weatherByDate.removeSource(data)
@@ -85,7 +106,8 @@ class ForecastRepositoryImpl(
                 val unitSpecificData = withContext(Dispatchers.IO) {
                     initWeatherData()
                     with(weeklyWeatherDao) {
-                        if (metric) metricWeeklyForecast else imperialWeatherForecast
+                        //if (metric) metricWeeklyForecast else imperialWeatherForecast
+                        metricWeeklyForecast
                     }
                 }
                 weekly.removeSource(unitSpecificData)
@@ -101,8 +123,11 @@ class ForecastRepositoryImpl(
             CoroutineScope(Dispatchers.Main).launch {
                 val unitSpecificData = withContext(Dispatchers.IO) {
                     initWeatherData()
+                    /*
                     if (metric) currentWeatherDao.weatherMetric
                     else currentWeatherDao.weatherImperial
+                    */
+                    currentWeatherDao.weatherMetric
                 }
                 current.removeSource(unitSpecificData)
                 current.addSource(unitSpecificData) { current.value = (it) }
