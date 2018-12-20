@@ -4,9 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <!--
         <variable name="currentWeather"
                   type="tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry"/>
         <variable name="isMetric" type="Boolean"/>
+        -->
         <variable name="loading" type="Boolean"/>
         <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.current.CurrentViewModel"/>
     </data>
