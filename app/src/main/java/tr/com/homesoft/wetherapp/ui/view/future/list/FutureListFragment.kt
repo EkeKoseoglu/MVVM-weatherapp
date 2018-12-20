@@ -10,14 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.future_list_fragment.*
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.databinding.FutureListFragmentBinding
 import tr.com.homesoft.wetherapp.ui.adapter.FutureForecastAdapter
-import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
@@ -63,7 +61,7 @@ class FutureListFragment : Fragment() {
         bindUI()
     }
 
-    private fun bindUI(){
+    private fun bindUI() {
 
         with(viewModel) {
             weeklyWeather.observe(viewLifecycleOwner, Observer {
