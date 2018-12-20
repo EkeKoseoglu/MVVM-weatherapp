@@ -18,6 +18,7 @@ import tr.com.homesoft.wetherapp.databinding.FutureListFragmentBinding
 import tr.com.homesoft.wetherapp.ui.adapter.FutureForecastAdapter
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.util.extensions.logd
 
 class FutureListFragment : Fragment() {
 
@@ -64,6 +65,18 @@ class FutureListFragment : Fragment() {
     private fun bindUI() {
 
         with(viewModel) {
+
+            weeklyWeatherForecast.observe(viewLifecycleOwner, Observer {
+                if (null == it) return@Observer
+
+                loading.value = false
+                with(forecastAdapter) {
+                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                    forecastDataList = it
+                }
+            })
+
+            /*
             weeklyWeather.observe(viewLifecycleOwner, Observer {
                 if (null == it) return@Observer
 
@@ -75,6 +88,7 @@ class FutureListFragment : Fragment() {
                     forecastDataList = it
                 }
             })
+            */
             /*
             getWeeklyForecast().observe(viewLifecycleOwner, Observer {
 
