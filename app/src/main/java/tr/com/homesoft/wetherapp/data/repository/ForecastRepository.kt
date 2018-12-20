@@ -7,6 +7,8 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWee
 
 interface ForecastRepository {
 
+    fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry>
+
     val location: LiveData<Location>
 
     val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>

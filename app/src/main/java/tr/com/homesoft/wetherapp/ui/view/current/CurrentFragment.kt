@@ -37,6 +37,7 @@ class CurrentFragment : Fragment() {
 
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
+            vm = viewModel.also { it.loading.value = true }
             loading = true
         }
 
@@ -46,6 +47,12 @@ class CurrentFragment : Fragment() {
     private fun bindUI()  {
 
         with(viewModel) {
+
+            currentWeatherForecast.observe(viewLifecycleOwner, Observer {
+                loading.value = false
+            })
+
+
             /*
                         getCurrentWeather().observe(viewLifecycleOwner, Observer {
 
@@ -59,6 +66,7 @@ class CurrentFragment : Fragment() {
 
                         })
             */
+            /*
             currentWeather.observe(viewLifecycleOwner, Observer {
                 if (null == it) return@Observer
 
@@ -68,7 +76,7 @@ class CurrentFragment : Fragment() {
                     currentWeather = it
                 }
             })
-
+*/
 
             /*
             getLoation().observe(viewLifecycleOwner, Observer { location ->

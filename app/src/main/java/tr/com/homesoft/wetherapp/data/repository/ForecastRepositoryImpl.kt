@@ -29,6 +29,20 @@ class ForecastRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
+    override fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry> {
+        val current = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
+        CoroutineScope(Dispatchers.Main).launch {
+            val unitSpecificData = withContext(Dispatchers.IO) {
+                initWeatherData()
+                if (isMetric) currentWeatherDao.weatherMetric
+                else currentWeatherDao.weatherImperial
+            }
+            current.removeSource(unitSpecificData)
+            current.addSource(unitSpecificData) { current.value = (it) }
+        }
+        return current
+    }
+
     private val metric: Boolean
         get() = unitProvider.getUnitSystem() == UnitSystem.METRIC
 
