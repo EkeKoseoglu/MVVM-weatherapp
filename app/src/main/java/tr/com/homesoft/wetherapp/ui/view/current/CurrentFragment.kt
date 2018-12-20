@@ -68,6 +68,7 @@ class CurrentFragment : Fragment() {
                     //isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
                     //currentWeather = it
                 }
+
             })
 
 

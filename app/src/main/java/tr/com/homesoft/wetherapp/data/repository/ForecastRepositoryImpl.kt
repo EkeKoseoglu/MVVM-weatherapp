@@ -116,9 +116,9 @@ class ForecastRepositoryImpl(
             val loc = MediatorLiveData<Location>()
             CoroutineScope(Dispatchers.Main).launch {
                 val locationData = withContext(Dispatchers.IO) {locationDao.weatherLocation}
+                loc.removeSource(locationData)
                 loc.addSource(locationData) {
                     loc.value = (it)
-                    loc.removeSource(locationData)
                 }
             }
             return loc
