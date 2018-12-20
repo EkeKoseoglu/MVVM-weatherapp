@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.future_list_fragment.*
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
@@ -18,7 +17,6 @@ import tr.com.homesoft.wetherapp.databinding.FutureListFragmentBinding
 import tr.com.homesoft.wetherapp.ui.adapter.FutureForecastAdapter
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
-import tr.com.homesoft.wetherapp.util.extensions.logd
 
 class FutureListFragment : Fragment() {
 
@@ -47,13 +45,13 @@ class FutureListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        with(forecast_rv) {
-            adapter = forecastAdapter
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-        }
-
         with(binding) {
+            with(forecastRv) {
+                adapter = forecastAdapter
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+            }
+
             setLifecycleOwner(this@FutureListFragment.activity)
             vm = viewModel.apply { loading.value = true }
             //loading = true
