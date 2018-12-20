@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
@@ -18,12 +17,12 @@ class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProv
 
     internal val location = repository.location
 
-    internal val weeklyWeather = repository.weeklyWeather
+    //internal val weeklyWeather = repository.weeklyWeather
 
     val loading = MutableLiveData<Boolean>()
 
     private val unitSystem = MutableLiveData<UnitSystem>()
-    val metric: LiveData<Boolean> = Transformations.map(unitSystem) {it == UnitSystem.METRIC}
+    val metric: LiveData<Boolean> = Transformations.map(unitSystem) { it == UnitSystem.METRIC }
 
     val weeklyWeatherForecast: LiveData<List<UnitSpecificWeeklyForecastEntry>> =
         Transformations.switchMap(metric) {
