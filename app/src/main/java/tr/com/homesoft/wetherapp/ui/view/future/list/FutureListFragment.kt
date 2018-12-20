@@ -55,7 +55,7 @@ class FutureListFragment : Fragment() {
         with(binding) {
             setLifecycleOwner(this@FutureListFragment.activity)
             vm = viewModel.apply { loading.value = true }
-            loading = true
+            //loading = true
         }
 
         bindUI()
