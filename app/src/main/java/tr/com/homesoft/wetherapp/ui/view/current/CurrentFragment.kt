@@ -38,7 +38,7 @@ class CurrentFragment : Fragment() {
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
             vm = viewModel.also { it.loading.value = true }
-            loading = true
+            //loading = true
         }
 
         bindUI()
@@ -94,16 +94,16 @@ class CurrentFragment : Fragment() {
             })
             */
 
-            location.observe(viewLifecycleOwner, Observer { loc ->
+            location.observe(viewLifecycleOwner, Observer {
 
-                if (null ==loc) return@Observer
+                if (null ==it) return@Observer
 
                 (activity as AppCompatActivity).apply {
 
-                    supportActionBar?.let {
-                        with(it) {
+                    supportActionBar?.let { actionBar ->
+                        with(actionBar) {
                             setSubtitle(R.string.today)
-                            title = loc.name
+                            title = it.name
                         }
                     }
                 }
