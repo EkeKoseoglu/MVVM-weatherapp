@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import tr.com.homesoft.wetherapp.R
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class UnitProviderImpl(context: Context) : UnitProvider {
 

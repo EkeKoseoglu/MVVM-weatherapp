@@ -16,7 +16,7 @@ import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.databinding.FutureListFragmentBinding
 import tr.com.homesoft.wetherapp.ui.adapter.FutureForecastAdapter
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class FutureListFragment : Fragment() {
 

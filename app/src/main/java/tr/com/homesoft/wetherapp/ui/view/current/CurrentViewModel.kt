@@ -8,7 +8,7 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCu
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 import tr.com.homesoft.wetherapp.ui.base.AbsentLiveData
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 

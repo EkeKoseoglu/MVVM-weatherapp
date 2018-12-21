@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class FutureDetailViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 

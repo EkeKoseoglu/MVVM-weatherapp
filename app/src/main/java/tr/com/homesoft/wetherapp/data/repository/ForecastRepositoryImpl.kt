@@ -17,7 +17,7 @@ import tr.com.homesoft.wetherapp.data.provider.LocationProvider
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.remote.WeatherNetworkDataSource
 import tr.com.homesoft.wetherapp.data.remote.response.WeatherResponse
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
+import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 import java.util.*
 
 class ForecastRepositoryImpl(
