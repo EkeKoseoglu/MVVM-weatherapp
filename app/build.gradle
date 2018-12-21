@@ -46,6 +46,7 @@ dependencies {
     def koinVersion = '1.0.2'
     def glideVersion = '4.8.0'
     def preferenceVersion = '1.1.0-alpha02'
+    def locationService = '16.0.0'
 
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -101,7 +102,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation "com.google.android.gms:play-services-location:$locationService"
 
 
     // Preference
