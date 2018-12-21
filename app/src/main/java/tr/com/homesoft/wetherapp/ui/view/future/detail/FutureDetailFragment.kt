@@ -6,21 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
-import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.databinding.FutureDetailFragmentBinding
-import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
 class FutureDetailFragment : Fragment() {
 
-    private val unitProvider: UnitProvider by inject()
+    //private val unitProvider: UnitProvider by inject()
 
     private val viewModel: FutureDetailViewModel by inject()
 
@@ -41,8 +35,8 @@ class FutureDetailFragment : Fragment() {
         date = FutureDetailFragmentArgs.fromBundle(arguments).date
 
         with(binding) {
-
-            isLoading = true
+            vm = viewModel.apply { loading.value = true }
+            //isLoading = true
             setLifecycleOwner(this@FutureDetailFragment.activity)
         }
 
@@ -53,16 +47,19 @@ class FutureDetailFragment : Fragment() {
 
         with(viewModel) {
 
-
-            val forecast = getForecastByDate(date)
+            val forecast = getDetailForecastByDate(date)
 
             forecast.observe(viewLifecycleOwner, Observer {
 
+                loading.value = false
+                setDetailForecast(it)
+                /*
                 with(binding) {
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    isLoading = false
-                    obj = it
+                    //isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
+                    //isLoading = false
+                    //obj = it
                 }
+                */
             })
 
             /*

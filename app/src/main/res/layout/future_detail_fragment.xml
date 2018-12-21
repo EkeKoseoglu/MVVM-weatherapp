@@ -3,11 +3,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="isMetric" type="Boolean"/>
+        <!-- <variable name="isMetric" type="Boolean"/>
         <variable name="isLoading" type="Boolean"/>
-        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.future.detail.FutureDetailViewModel"/>
+
         <variable name="obj"
                   type="tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry"/>
+                    -->
+        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.future.detail.FutureDetailViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,11 +31,11 @@
         <androidx.constraintlayout.widget.Group
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{!safeUnbox(isLoading)}"
+                android:visibility="@{!safeUnbox(vm.loading)}"
                 app:constraint_referenced_ids="textView2,textView5,textView6,imageView3,textView7,textView8,textView9,textView10,textView13,textView11,textView14,textView12"/>
 
         <TextView
-                android:text="@{obj.conditionText}"
+                android:text="@{vm.detailForecast.conditionText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
@@ -45,8 +47,8 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
 
         <TextView
-                app:formatTemp="@{obj.temperature}"
-                app:metric="@{safeUnbox(isMetric)}"
+                app:formatTemp="@{vm.detailForecast.temperature}"
+                app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5"
@@ -58,9 +60,9 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView3"/>
 
         <TextView
-                app:minTemp="@{obj.minTemperature}"
-                app:maxTemp="@{obj.maxTemperature}"
-                app:metric="@{safeUnbox(isMetric)}"
+                app:minTemp="@{vm.detailForecast.minTemperature}"
+                app:maxTemp="@{vm.detailForecast.maxTemperature}"
+                app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView6"
@@ -70,7 +72,7 @@
                 android:layout_marginTop="8dp" tools:text="Min: 19\u00b0C Max: 20\u00b0C"/>
 
         <ImageView
-                android:src="@{obj.conditionIconUrl}"
+                android:src="@{vm.detailForecast.conditionIconUrl}"
                 tools:srcCompat="@drawable/art_clouds"
                 android:layout_height="0dp"
                 android:id="@+id/imageView3"
@@ -140,8 +142,8 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
 
         <TextView
-                app:formatWind="@{obj.windSpeed}"
-                app:metric="@{safeUnbox(isMetric)}"
+                app:formatWind="@{vm.detailForecast.windSpeed}"
+                app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView11"
@@ -153,8 +155,8 @@
                 tools:text="15 m/s"/>
 
         <TextView
-                app:formatPrecipitaion="@{obj.totalPrecip}"
-                app:metric="@{safeUnbox(isMetric)}"
+                app:formatPrecipitaion="@{vm.detailForecast.totalPrecip}"
+                app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView12"
@@ -166,8 +168,8 @@
                 tools:text="10 mm"/>
 
         <TextView
-                app:formatVisibilityDistance="@{obj.visibility}"
-                app:metric="@{safeUnbox(isMetric)}"
+                app:formatVisibilityDistance="@{vm.detailForecast.visibility}"
+                app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView13"
@@ -179,7 +181,7 @@
                 tools:text="10 km"/>
 
         <TextView
-                android:text="@{@string/format_humidity(obj.humidity)}"
+                android:text="@{@string/format_humidity(vm.detailForecast.humidity)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView14"

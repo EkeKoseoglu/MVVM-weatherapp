@@ -77,7 +77,6 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @BindingAdapter("formatTemp", "metric")
     fun setFormatTemp(view: TextView, temperature: Double, isMetric: Boolean) {
 

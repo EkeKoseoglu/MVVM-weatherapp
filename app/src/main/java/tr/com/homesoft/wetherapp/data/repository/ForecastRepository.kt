@@ -11,6 +11,8 @@ interface ForecastRepository {
 
     fun getWeeklyWeather(isMetric: Boolean): LiveData<List<UnitSpecificWeeklyForecastEntry>>
 
+    fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry>
+
     val location: LiveData<Location>
 
     val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>

@@ -29,6 +29,20 @@ class ForecastRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
+    override fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
+        val weatherByDate = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
+        CoroutineScope(Dispatchers.Main).launch {
+            val data = withContext(Dispatchers.IO) {
+                with(weeklyWeatherDao) {
+                    if (isMetric) findMetricByDate(date) else findImperialByDate(date)
+                }
+            }
+            weatherByDate.removeSource(data)
+            weatherByDate.addSource(data) {weatherByDate.value = it}
+        }
+        return weatherByDate
+    }
+
     override fun getWeeklyWeather(isMetric: Boolean): LiveData<List<UnitSpecificWeeklyForecastEntry>> {
         val weekly = MediatorLiveData<List<UnitSpecificWeeklyForecastEntry>>()
         CoroutineScope(Dispatchers.Main).launch {
