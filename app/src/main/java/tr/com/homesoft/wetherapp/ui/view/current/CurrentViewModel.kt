@@ -18,7 +18,7 @@ class CurrentViewModel(private val repository: ForecastRepository, unitProvider:
 
     internal val location = repository.location
 
-    internal val currentWeather = repository.currentWeather
+    //internal val currentWeather = repository.currentWeather
 
     private val unitSystem = MutableLiveData<UnitSystem>()
     val metric: LiveData<Boolean> = Transformations.map(unitSystem) {
