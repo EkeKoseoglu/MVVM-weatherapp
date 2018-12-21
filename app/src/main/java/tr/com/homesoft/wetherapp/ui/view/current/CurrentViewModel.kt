@@ -8,6 +8,8 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCu
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 import tr.com.homesoft.wetherapp.ui.base.AbsentLiveData
+import tr.com.homesoft.wetherapp.ui.state.Loading
+import tr.com.homesoft.wetherapp.ui.state.UIState
 import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
@@ -15,6 +17,8 @@ class CurrentViewModel(private val repository: ForecastRepository, unitProvider:
     //internal suspend fun getCurrentWeather() = repository.getCurrentWeather()
 
     //internal suspend fun getLoation() = repository.getWeatherLocation()
+
+    val uiState = MutableLiveData<UIState>()
 
     internal val location = repository.weatherLocation
 
@@ -36,6 +40,7 @@ class CurrentViewModel(private val repository: ForecastRepository, unitProvider:
 
     init {
         unitSystem.value = unitProvider.getUnitSystem()
+
     }
 
 }
