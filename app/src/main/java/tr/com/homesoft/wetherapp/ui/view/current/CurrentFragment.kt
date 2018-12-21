@@ -7,19 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
-import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
-import tr.com.homesoft.wetherapp.ui.base.ScopedFragment
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
-import tr.com.homesoft.wetherapp.ui.view.UnitSystem
-import tr.com.homesoft.wetherapp.util.extensions.logd
 
 class CurrentFragment : Fragment() {
-
-    private val unitProvider: UnitProvider by inject()
 
     private val viewModel: CurrentViewModel by inject()
 
@@ -44,7 +37,7 @@ class CurrentFragment : Fragment() {
         bindUI()
     }
 
-    private fun bindUI()  {
+    private fun bindUI() {
 
         with(viewModel) {
 
@@ -96,7 +89,7 @@ class CurrentFragment : Fragment() {
 
             location.observe(viewLifecycleOwner, Observer {
 
-                if (null ==it) return@Observer
+                if (null == it) return@Observer
 
                 (activity as AppCompatActivity).apply {
 

@@ -1,6 +1,5 @@
 package tr.com.homesoft.wetherapp.ui.view.future.detail
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 
