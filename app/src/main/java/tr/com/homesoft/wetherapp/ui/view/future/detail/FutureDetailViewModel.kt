@@ -11,7 +11,7 @@ import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
 class FutureDetailViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 
-    internal fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
+    //internal fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
 
     //internal suspend fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
 
