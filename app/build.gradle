@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    def navigation_version = '1.0.0-alpha08'
+    def navigation_version = '1.0.0-alpha09'
     def roomVersion = '2.1.0-alpha03'
     def gsonVersion = '2.8.5'
     def threetenVersion = '1.1.1'
@@ -45,7 +45,8 @@ dependencies {
     def coroutineVersion = '1.0.1'
     def koinVersion = '1.0.2'
     def glideVersion = '4.8.0'
-    def preferenceVersion = '1.1.0-alpha01'
+    def preferenceVersion = '1.1.0-alpha02'
+
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
@@ -58,8 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha08'
-    implementation 'com.google.android.material:material:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
 
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
@@ -101,6 +101,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 
 
     // Preference
