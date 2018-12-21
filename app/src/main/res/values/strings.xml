@@ -49,8 +49,8 @@
     <string name="precip_label">Precipitation :</string>
     <string name="pref_use_device_location_key" translatable="false">USE_DEVICE_LOCATION</string>
     <string name="pref_location_title">Location</string>
-    <string name="pref_switch_title">Use device location</string>
-    <string name="pref_switch_summary">Allow the app to get your location</string>
+    <string name="pref_switch_title">Use device weatherLocation</string>
+    <string name="pref_switch_summary">Allow the app to get your weatherLocation</string>
     <string name="preference_unit_category_title">Units</string>
     <string name="pref_units_metric_value" translatable="false">METRIC</string>
     <string name="preference_location_category_title">Weather Location</string>

@@ -101,13 +101,13 @@ class FutureListFragment : Fragment() {
             })
             */
 /*
-            getLocation().observe(viewLifecycleOwner, Observer { location ->
+            getWeatherLocation().observe(viewLifecycleOwner, Observer { weatherLocation ->
                 (activity as AppCompatActivity).apply {
 
                     supportActionBar?.let {
                         with(it) {
                             setSubtitle(R.string.weekly)
-                            title = location.name
+                            title = weatherLocation.name
                         }
                     }
                 }

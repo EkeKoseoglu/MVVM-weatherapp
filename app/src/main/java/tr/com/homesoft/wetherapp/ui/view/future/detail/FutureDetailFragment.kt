@@ -63,13 +63,13 @@ class FutureDetailFragment : Fragment() {
             })
 
             /*
-            getLocation().observe(viewLifecycleOwner, Observer { location ->
+            getWeatherLocation().observe(viewLifecycleOwner, Observer { weatherLocation ->
                 (activity as AppCompatActivity).apply {
 
                     supportActionBar?.let {
                         with(it) {
                             subtitle = date
-                            title = location.name
+                            title = weatherLocation.name
                         }
                     }
                 }

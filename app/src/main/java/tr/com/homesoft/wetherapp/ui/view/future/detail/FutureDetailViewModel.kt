@@ -15,9 +15,9 @@ class FutureDetailViewModel(private val repository: ForecastRepository, unitProv
 
     //internal suspend fun getForecastByDate(date: String) = repository.getWeatherByDate(date)
 
-    //internal suspend fun getLocation() = repository.getLocation()
+    //internal suspend fun getWeatherLocation() = repository.getWeatherLocation()
 
-    internal val location = repository.location
+    internal val location = repository.weatherLocation
 
     val loading = MutableLiveData<Boolean>()
 

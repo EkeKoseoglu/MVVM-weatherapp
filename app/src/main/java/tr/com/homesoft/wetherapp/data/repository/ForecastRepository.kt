@@ -1,7 +1,7 @@
 package tr.com.homesoft.wetherapp.data.repository
 
 import androidx.lifecycle.LiveData
-import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 
@@ -13,7 +13,7 @@ interface ForecastRepository {
 
     fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry>
 
-    val location: LiveData<Location>
+    val weatherLocation: LiveData<WeatherLocation>
 
     val currentWeather: LiveData<out UnitSpecificCurrentWeatherEntry>
 
@@ -21,7 +21,7 @@ interface ForecastRepository {
 
     fun getWeatherByDate(date: String): LiveData<out UnitSpecificWeeklyForecastEntry>
 
-    //suspend fun getLocation(): LiveData<Location>
+    //suspend fun getWeatherLocation(): LiveData<WeatherLocation>
 
     //suspend fun getCurrentWeather(): LiveData<out UnitSpecificCurrentWeatherEntry>
 

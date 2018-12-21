@@ -14,9 +14,9 @@ class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProv
 
     //internal suspend fun getWeeklyForecast() = repository.getWeeklyWeather()
 
-    //internal suspend fun getLocation() = repository.getLocation()
+    //internal suspend fun getWeatherLocation() = repository.getWeatherLocation()
 
-    internal val location = repository.location
+    internal val location = repository.weatherLocation
 
     //internal val weeklyWeather = repository.weeklyWeather
 

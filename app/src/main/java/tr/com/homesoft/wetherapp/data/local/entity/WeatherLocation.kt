@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
-import tr.com.homesoft.wetherapp.data.local.entity.Location.Companion.WEATHER_LOCATION_TABLE
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation.Companion.WEATHER_LOCATION_TABLE
 
 @Entity(tableName = WEATHER_LOCATION_TABLE)
-data class Location(
+data class WeatherLocation(
     val country: String,
     val lat: Double,
     val localtime: String,

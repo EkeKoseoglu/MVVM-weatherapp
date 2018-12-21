@@ -10,11 +10,11 @@ import tr.com.homesoft.wetherapp.data.local.dao.CurrentWeatherDao
 import tr.com.homesoft.wetherapp.data.local.dao.LocationDao
 import tr.com.homesoft.wetherapp.data.local.dao.WeeklyWeatherDao
 import tr.com.homesoft.wetherapp.data.local.entity.CurrentWeatherEntry
-import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.local.entity.WeeklyForecastEntry
 
 @Database(
-    entities = [CurrentWeatherEntry::class, WeeklyForecastEntry::class, Location::class],
+    entities = [CurrentWeatherEntry::class, WeeklyForecastEntry::class, WeatherLocation::class],
     version = 1,
     exportSchema = false
 )

@@ -72,14 +72,14 @@ class CurrentFragment : Fragment() {
 */
 
             /*
-            getLoation().observe(viewLifecycleOwner, Observer { location ->
-                if (null == location) return@Observer
+            getLoation().observe(viewLifecycleOwner, Observer { weatherLocation ->
+                if (null == weatherLocation) return@Observer
                 (activity as AppCompatActivity).apply {
 
                     supportActionBar?.let {
                         with(it) {
                             setSubtitle(R.string.today)
-                            title = location.name
+                            title = weatherLocation.name
                         }
                     }
                 }

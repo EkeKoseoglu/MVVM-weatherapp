@@ -10,7 +10,7 @@ import org.threeten.bp.ZonedDateTime
 import tr.com.homesoft.wetherapp.data.local.dao.CurrentWeatherDao
 import tr.com.homesoft.wetherapp.data.local.dao.LocationDao
 import tr.com.homesoft.wetherapp.data.local.dao.WeeklyWeatherDao
-import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.LocationProvider
@@ -155,9 +155,9 @@ class ForecastRepositoryImpl(
         }
 
 
-    override val location: LiveData<Location>
+    override val weatherLocation: LiveData<WeatherLocation>
         get() {
-            val loc = MediatorLiveData<Location>()
+            val loc = MediatorLiveData<WeatherLocation>()
             CoroutineScope(Dispatchers.Main).launch {
                 val locationData = withContext(Dispatchers.IO) {locationDao.weatherLocation}
                 loc.addSource(locationData) {
@@ -168,7 +168,7 @@ class ForecastRepositoryImpl(
         }
 
 /*
-    override suspend fun getLocation() =
+    override suspend fun getWeatherLocation() =
         withContext(Dispatchers.IO) {
             return@withContext locationDao.weatherLocation
         }
@@ -176,7 +176,7 @@ class ForecastRepositoryImpl(
 
     private fun persistFetchedCurrentWeather(fetchedCurrentWeather: WeatherResponse) {
         CoroutineScope(Dispatchers.IO).launch {
-            locationDao.upsert(fetchedCurrentWeather.location)
+            locationDao.upsert(fetchedCurrentWeather.weatherLocation)
             currentWeatherDao.upsert(fetchedCurrentWeather.currentWeatherEntry)
             weeklyWeatherDao.deleteAll()
             weeklyWeatherDao.upsertAll(*fetchedCurrentWeather.forecast.weeklyForcastList.toTypedArray())

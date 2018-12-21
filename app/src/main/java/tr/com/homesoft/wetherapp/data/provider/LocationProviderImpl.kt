@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import tr.com.homesoft.wetherapp.R
-import tr.com.homesoft.wetherapp.data.local.entity.Location
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 
 class LocationProviderImpl(context: Context) : LocationProvider {
 
-    override fun hasLocationChanged(lastLocation: Location) =
-        lastLocation.name != getPreferredLocation()
+    override fun hasLocationChanged(lastWeatherLocation: WeatherLocation) =
+        lastWeatherLocation.name != getPreferredLocation()
 
 
     private val appContext = context.applicationContext
