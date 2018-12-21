@@ -12,4 +12,6 @@ class FutureDetailViewModel(private val repository: ForecastRepository) : ViewMo
     //internal suspend fun getLocation() = repository.getLocation()
 
     internal val location = repository.location
+
+
 }

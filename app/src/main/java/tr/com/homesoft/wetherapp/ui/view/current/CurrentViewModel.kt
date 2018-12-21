@@ -10,7 +10,7 @@ import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 import tr.com.homesoft.wetherapp.ui.base.AbsentLiveData
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
-class CurrentViewModel(repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
+class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 
     //internal suspend fun getCurrentWeather() = repository.getCurrentWeather()
 
