@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
+import tr.com.homesoft.wetherapp.ui.base.AbsentLiveData
 import tr.com.homesoft.wetherapp.ui.view.UnitSystem
 
 class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
@@ -26,6 +27,8 @@ class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProv
 
     val weeklyWeatherForecast: LiveData<List<UnitSpecificWeeklyForecastEntry>> =
         Transformations.switchMap(metric) {
+            if (null == metric)
+                return@switchMap AbsentLiveData<List<UnitSpecificWeeklyForecastEntry>>()
             repository.getWeeklyWeather(it)
         }
 
