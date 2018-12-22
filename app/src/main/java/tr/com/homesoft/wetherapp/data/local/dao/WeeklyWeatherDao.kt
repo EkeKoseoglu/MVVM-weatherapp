@@ -1,15 +1,13 @@
 package tr.com.homesoft.wetherapp.data.local.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import tr.com.homesoft.wetherapp.data.local.entity.WeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.local.entity.WeeklyForecastEntry.Companion.WEEKLY_FORECAST_TABLE_NAME
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.ImperialWeeklyForecastEntry
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.MetricWeeklyForecastEntry
 
+@SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
 @Dao
 interface WeeklyWeatherDao {
 
