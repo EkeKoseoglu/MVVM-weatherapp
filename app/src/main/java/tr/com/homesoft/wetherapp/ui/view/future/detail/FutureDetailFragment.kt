@@ -32,8 +32,7 @@ class FutureDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        date = arguments?.let { FutureDetailFragmentArgs.fromBundle(it)  }?.let { date }!!
-        //date = FutureDetailFragmentArgs.fromBundle(arguments).date
+        date = FutureDetailFragmentArgs.fromBundle(arguments!!).date
 
         with(binding) {
             vm = viewModel.apply { loading.value = true }
