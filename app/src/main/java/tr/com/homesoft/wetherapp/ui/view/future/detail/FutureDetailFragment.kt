@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.databinding.FutureDetailFragmentBinding
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
@@ -80,7 +82,9 @@ class FutureDetailFragment : Fragment() {
 
                     supportActionBar?.let { actionBar ->
                         with(actionBar) {
-                            subtitle = date
+                            val local = LocalDate.parse(date)
+                            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                            subtitle = local.format(formatter)
 
                             title = it.name
                         }
