@@ -1,5 +1,7 @@
 package tr.com.homesoft.wetherapp.di
 
+import com.google.android.gms.location.LocationServices
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.experimental.builder.viewModel
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.singleBy
@@ -33,6 +35,8 @@ val appModule = module {
     singleBy<ConnectivityInterceptor, ConnectivityInterceptorImpl>()
 
     single { ApixuWeatherApiService(get()) }
+
+    factory { LocationServices.getFusedLocationProviderClient(androidApplication()) }
 
     singleBy<UnitProvider, UnitProviderImpl>()
 
