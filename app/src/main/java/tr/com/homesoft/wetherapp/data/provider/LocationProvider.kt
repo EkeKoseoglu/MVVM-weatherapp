@@ -4,6 +4,6 @@ import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 
 interface LocationProvider {
 
-    fun getPreferredLocation(): String
-    fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean
+    suspend fun getPreferredLocation(): String
+    suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean
 }
