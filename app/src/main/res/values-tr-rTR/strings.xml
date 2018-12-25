@@ -21,4 +21,5 @@
     <string name="format_min_max_temp_imperial">"Min: <xliff:g>%1$1.1f\u00b0</xliff:g>F, Maks: <xliff:g>%2$1.1f\u00b0</xliff:g>F</string>
     <string name="feels_like_temp_metric">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>C</string>
     <string name="feels_like_temp_imperial">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>F</string>
+    <string name="no_permissions">Lütfen Ayarlar menüsünden Konum kullanımına izin verin</string>
 </resources>
