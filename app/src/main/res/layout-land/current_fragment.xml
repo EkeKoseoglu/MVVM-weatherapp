@@ -173,7 +173,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView_wind_speed"
                 app:layout_constraintStart_toEndOf="@+id/textView_wind_speed" android:layout_marginStart="8dp"/>
         <ImageView
-                android:src="@drawable/wind_direction_n"
+                android:src="@{vm.currentWeatherForecast.windDegree}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/imageView2"
