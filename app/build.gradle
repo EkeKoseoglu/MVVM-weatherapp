@@ -71,6 +71,10 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$navigation_version"
 
+
+    //Android KTX
+    implementation 'androidx.core:core-ktx:1.0.1'
+
     // Room components
     implementation "androidx.room:room-runtime:$roomVersion"
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
