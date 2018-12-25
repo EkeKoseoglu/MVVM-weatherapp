@@ -61,4 +61,5 @@
     <string name="format_min_max_temp_metric">Min: <xliff:g>%1$1.1f\\u00b0</xliff:g>C, Max: <xliff:g>
         %2$1.1f\\u00b0</xliff:g>C
     </string>
+    <string name="no_permissions">Please set location manually in settings</string>
 </resources>
