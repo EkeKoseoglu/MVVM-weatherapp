@@ -5,11 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
-import kotlinx.coroutines.Deferred
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.remote.internal.LocationPermissionNotGrantedException
-import tr.com.homesoft.wetherapp.data.remote.internal.asDeferred
 import tr.com.homesoft.wetherapp.util.extensions.isPermissionGranted
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
