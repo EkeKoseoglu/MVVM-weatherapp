@@ -4,12 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!--
-        <variable name="currentWeather"
-                  type="tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry"/>
-        <variable name="isMetric" type="Boolean"/>
-        <variable name="loading" type="Boolean"/>
-        -->
         <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.current.CurrentViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,7 +165,8 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 app:layout_constraintTop_toTopOf="@+id/textView_wind_speed"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_wind_speed"
-                app:layout_constraintStart_toEndOf="@+id/textView_wind_speed" android:layout_marginStart="8dp"/>
+                app:layout_constraintStart_toEndOf="@+id/textView_wind_speed"
+                android:layout_marginStart="8dp"/>
         <ImageView
                 android:src="@{vm.currentWeatherForecast.windDegree}"
                 android:layout_width="40dp"
@@ -179,8 +174,10 @@
                 android:id="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="@+id/textView_wind_direction"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_wind_direction"
-                app:layout_constraintStart_toEndOf="@+id/textView_wind_direction" android:layout_marginStart="16dp"
-                tools:ignore="ContentDescription"/>
+                app:layout_constraintStart_toEndOf="@+id/textView_wind_direction"
+                android:layout_marginStart="16dp"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@drawable/wind_direction_n"/>
         <TextView
                 app:formatPrecipitaion="@{vm.currentWeatherForecast.precipitationVolume}"
                 app:metric="@{safeUnbox(vm.metric)}"
