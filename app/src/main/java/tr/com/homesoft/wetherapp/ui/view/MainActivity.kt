@@ -1,7 +1,6 @@
 package tr.com.homesoft.wetherapp.ui.view
 
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -10,32 +9,25 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.remote.internal.PermissionsRequester
-import kotlin.coroutines.CoroutineContext
 
 
-class MainActivity : AppCompatActivity(), CoroutineScope {
-
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
+class MainActivity : AppCompatActivity() {
     private val permissionsRequester: PermissionsRequester by lazy { PermissionsRequester(this) }
 
     private val fusedLocationProviderClient: FusedLocationProviderClient by inject()
 
-    private lateinit var locationChannel: ReceiveChannel<Location>
-
-    private val locationManager: BoundLocationManager by lazy { BoundLocationManager(fusedLocationProviderClient) }
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(p0: LocationResult?) {
+            super.onLocationResult(p0)
+        }
+    }
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
@@ -49,39 +41,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         if (!permissionsRequester.hasPermissions()) {
             permissionsRequester.requestPermissions()
+        } else {
+            bindLocationManager()
         }
 
     }
 
-    @ObsoleteCoroutinesApi
-    @ExperimentalCoroutinesApi
-    override fun onStart() {
-        super.onStart()
-        job = Job()
-        val locationRequest = LocationRequest().apply {
-            interval = 5000
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-
-        locationChannel = locationManager.observeLocation(locationRequest)
-
-        launch {
-            locationChannel.consumeEach {
-
-            }
-        }
-    }
-
-    override fun onStop() {
-        job.cancel()
-        locationChannel.cancel()
-        super.onStop()
-    }
-
-/*    private fun bindLocationManager() {
+    private fun bindLocationManager() {
         LifecycleBoundLocationManager(this, fusedLocationProviderClient, locationCallback)
-    }*/
+    }
 
     private fun setupBottomNav(navController: NavController) {
         with(navController) {
