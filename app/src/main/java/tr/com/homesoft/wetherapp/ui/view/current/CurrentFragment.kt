@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
+import tr.com.homesoft.wetherapp.data.local.entity.CurrentWeatherEntry
+import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.state.Error
@@ -34,7 +36,7 @@ class CurrentFragment : Fragment() {
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
             vm = viewModel.apply {
-                uiState.value = Loading
+                uiState.value = Loading<Nothing>()
             }
 
             //loading = true
@@ -49,15 +51,15 @@ class CurrentFragment : Fragment() {
 
             uiState.observe(viewLifecycleOwner, Observer {
                 when(it) {
-                    Loading -> { loading.value = true }
-                    HasData -> { loading.value = false}
-                    is Error -> { loading.value = false}
+                    is Loading<*> -> { loading.value = true }
+                    is HasData<*> -> { loading.value = false}
+                    is Error<*> -> { loading.value = false}
                 }
             })
 
 
             currentWeatherForecast.observe(viewLifecycleOwner, Observer {
-                uiState.value = HasData
+                uiState.value = HasData(it)
             })
 
 
