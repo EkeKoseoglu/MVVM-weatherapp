@@ -124,19 +124,18 @@ class ForecastRepositoryImpl(
 
         //If last found location is null or device location is different than the last found location
         //fetch data from the Internet and return from the function
-        if (null == lastLocation || locationProvider.hasLocationChanged(lastLocation)) {
+        if (null == lastLocation || isFetchCurrentNeeded(lastLocation.zonedDateTime) || locationProvider.hasLocationChanged(lastLocation) ) {
             fetchCurrentWeather()
-            return
         }
 
-        //Check if fetching of data is needed
+/*        //Check if fetching of data is needed
         //If needed, fetch data from the Internet
         if (isFetchCurrentNeeded(lastLocation.zonedDateTime))
-            fetchCurrentWeather()
+            fetchCurrentWeather()*/
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
-        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30)
+        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(1)
         return lastFetchTime.isBefore(thirtyMinutesAgo)
     }
 
