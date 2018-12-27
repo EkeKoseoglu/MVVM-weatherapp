@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.tasks.Task
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.remote.internal.LocationPermissionNotGrantedException
@@ -19,8 +20,19 @@ class LocationProviderImpl(
     context: Context
 ) : PreferenceProvider(context), LocationProvider {
 
-    override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation) =
-        hasDeviceLocationChanged(lastWeatherLocation) || hasCustomLocationChanged(lastWeatherLocation)
+    override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation) : Boolean {
+
+        val deviceLastLocation = try {
+
+            hasDeviceLocationChanged(lastWeatherLocation)
+
+        } catch (e: LocationPermissionNotGrantedException) {
+            false
+        }
+
+        return deviceLastLocation || hasCustomLocationChanged(lastWeatherLocation)
+    }
+
 
 
     private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) =
@@ -34,7 +46,6 @@ class LocationProviderImpl(
                 getString(R.string.pref_loc_default_value)
             )!!
         }
-
 
     private suspend fun hasDeviceLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
         if (!isUsingDeviceLocation())
@@ -50,14 +61,7 @@ class LocationProviderImpl(
 
     @SuppressLint("MissingPermission")
     private suspend fun getLastDeviceLocation(): Location? = if (hasLocationPermission())
-        suspendCoroutine { continuation ->
-            fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                    continuation.resume(task.result)
-                else
-                    continuation.resumeWithException(task.exception!!)
-            }
-        }
+        fusedLocationProviderClient.lastLocation.completeListener()
     else
         throw LocationPermissionNotGrantedException()
 
@@ -78,6 +82,16 @@ class LocationProviderImpl(
             }
         } else {
             return getCustomLocationName()
+        }
+    }
+
+    private suspend fun <T> Task<T>.completeListener() = suspendCoroutine <T> { cont ->
+        this.addOnCompleteListener {
+            @Suppress("UNCHECKED_CAST")
+            if (this.isSuccessful)
+                cont.resume(this.result as T)
+            else
+                cont.resumeWithException(this.exception!!)
         }
     }
 
