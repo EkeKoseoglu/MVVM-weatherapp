@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
-import tr.com.homesoft.wetherapp.data.local.entity.CurrentWeatherEntry
-import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
 import tr.com.homesoft.wetherapp.ui.state.Error
@@ -23,10 +21,7 @@ class CurrentFragment : Fragment() {
 
     private val binding: CurrentFragmentBinding by inflate(R.layout.current_fragment)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return binding.root
     }
 
@@ -36,12 +31,9 @@ class CurrentFragment : Fragment() {
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
             vm = viewModel.apply {
-                uiState.value = Loading<Nothing>()
+                uiState.value = Loading
             }
-
-            //loading = true
         }
-
         bindUI()
     }
 
@@ -50,10 +42,16 @@ class CurrentFragment : Fragment() {
         with(viewModel) {
 
             uiState.observe(viewLifecycleOwner, Observer {
-                when(it) {
-                    is Loading<*> -> { loading.value = true }
-                    is HasData<*> -> { loading.value = false}
-                    is Error<*> -> { loading.value = false}
+                when (it) {
+                    Loading -> {
+                        loading.value = true
+                    }
+                    is HasData<*> -> {
+                        loading.value = false
+                    }
+                    is Error<*> -> {
+                        loading.value = false
+                    }
                 }
             })
 
@@ -62,47 +60,6 @@ class CurrentFragment : Fragment() {
                 uiState.value = HasData(it)
             })
 
-
-            /*
-                        getCurrentWeather().observe(viewLifecycleOwner, Observer {
-
-                            if (null == it) return@Observer
-
-                            with(binding) {
-                                loading = false
-                                isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                                currentWeather = it
-                            }
-
-                        })
-            */
-            /*
-            currentWeather.observe(viewLifecycleOwner, Observer {
-                if (null == it) return@Observer
-
-                with(binding) {
-                    loading = false
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    currentWeather = it
-                }
-            })
-*/
-
-            /*
-            getLoation().observe(viewLifecycleOwner, Observer { weatherLocation ->
-                if (null == weatherLocation) return@Observer
-                (activity as AppCompatActivity).apply {
-
-                    supportActionBar?.let {
-                        with(it) {
-                            setSubtitle(R.string.today)
-                            title = weatherLocation.name
-                        }
-                    }
-                }
-
-            })
-            */
 
             location.observe(viewLifecycleOwner, Observer {
 

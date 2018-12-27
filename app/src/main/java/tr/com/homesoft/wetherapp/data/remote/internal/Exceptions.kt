@@ -2,5 +2,5 @@ package tr.com.homesoft.wetherapp.data.remote.internal
 
 import java.io.IOException
 
-class Exceptions : IOException()
+class NoConnectionException : IOException()
 class LocationPermissionNotGrantedException : Exception()
