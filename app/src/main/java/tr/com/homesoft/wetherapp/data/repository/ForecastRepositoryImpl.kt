@@ -124,7 +124,9 @@ class ForecastRepositoryImpl(
 
         //If last found location is null or device location is different than the last found location
         //fetch data from the Internet and return from the function
-        if (null == lastLocation || isFetchCurrentNeeded(lastLocation.zonedDateTime) || locationProvider.hasLocationChanged(lastLocation) ) {
+        if (null == lastLocation ||
+            isFetchCurrentNeeded(lastLocation.zonedDateTime) ||
+            locationProvider.hasLocationChanged(lastLocation) ) {
             fetchCurrentWeather()
         }
 
