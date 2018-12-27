@@ -12,13 +12,7 @@ import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 
-    //internal suspend fun getWeeklyForecast() = repository.getWeeklyWeather()
-
-    //internal suspend fun getWeatherLocation() = repository.getWeatherLocation()
-
     internal val location = repository.weatherLocation
-
-    //internal val weeklyWeather = repository.weeklyWeather
 
     val loading = MutableLiveData<Boolean>()
 
