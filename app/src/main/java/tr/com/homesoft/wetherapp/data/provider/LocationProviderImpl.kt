@@ -34,7 +34,6 @@ class LocationProviderImpl(
     }
 
 
-
     private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) =
         getCustomLocationName().toLowerCase() != lastWeatherLocation.name.toLowerCase()
 
@@ -60,7 +59,7 @@ class LocationProviderImpl(
     }
 
     @SuppressLint("MissingPermission")
-    private suspend fun getLastDeviceLocation(): Location? = if (hasLocationPermission())
+    private suspend fun getLastDeviceLocation() = if (hasLocationPermission())
         fusedLocationProviderClient.lastLocation.completeListener()
     else
         throw LocationPermissionNotGrantedException()
