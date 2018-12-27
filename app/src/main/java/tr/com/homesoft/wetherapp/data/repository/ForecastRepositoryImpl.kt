@@ -42,7 +42,6 @@ class ForecastRepositoryImpl(
                     if (isMetric) findMetricByDate(date) else findImperialByDate(date)
                 }
             }
-            mDetailForecast.removeSource(data)
             mDetailForecast.addSource(data, mDetailForecast::setValue)
         }
         return mDetailForecast
@@ -59,7 +58,6 @@ class ForecastRepositoryImpl(
                     if (isMetric) metricWeeklyForecast else imperialWeatherForecast
                 }
             }
-            mWeeklyWeather.removeSource(unitSpecificData)
             mWeeklyWeather.addSource(unitSpecificData, mWeeklyWeather::setValue)
         }
         return mWeeklyWeather
@@ -72,12 +70,12 @@ class ForecastRepositoryImpl(
         CoroutineScope(Dispatchers.Main).launch {
             val unitSpecificData = withContext(Dispatchers.IO) {
                 initWeatherData()
-                if (isMetric) currentWeatherDao.weatherMetric
-                else currentWeatherDao.weatherImperial
+                with(currentWeatherDao) {
+                    if (isMetric) weatherMetric
+                    else weatherImperial
+                }
             }
-            mCurrentWeather.removeSource(unitSpecificData)
             mCurrentWeather.addSource(unitSpecificData, mCurrentWeather::setValue)
-
         }
         return mCurrentWeather
     }
