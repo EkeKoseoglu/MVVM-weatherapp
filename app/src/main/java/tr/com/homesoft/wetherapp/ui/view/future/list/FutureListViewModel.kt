@@ -27,8 +27,6 @@ class FutureListViewModel(repository: ForecastRepository, unitProvider: UnitProv
 
     val weeklyWeatherForecast: LiveData<List<UnitSpecificWeeklyForecastEntry>> =
         Transformations.switchMap(metric) {
-            if (null == metric)
-                return@switchMap AbsentLiveData<List<UnitSpecificWeeklyForecastEntry>>()
             repository.getWeeklyWeather(it)
         }
 
