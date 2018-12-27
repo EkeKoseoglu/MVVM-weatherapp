@@ -51,14 +51,21 @@ class ForecastRepositoryImpl(
 
     override fun getWeeklyWeather(isMetric: Boolean): LiveData<List<UnitSpecificWeeklyForecastEntry>> {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val unitSpecificData = withContext(Dispatchers.IO) {
-                initWeatherData()
+        CoroutineScope(Dispatchers.IO).launch {
+            //Fetch data from the Internet
+            initWeatherData()
+
+            //Load persisted data from db
+            val unitSpecificData =
                 with(weeklyWeatherDao) {
-                    if (isMetric) metricWeeklyForecast else imperialWeatherForecast
+                    if (isMetric) metricWeeklyForecast
+                    else imperialWeatherForecast
                 }
+
+            //Observe data changes on the Main thread
+            withContext(Dispatchers.Main) {
+                mWeeklyWeather.addSource(unitSpecificData, mWeeklyWeather::setValue)
             }
-            mWeeklyWeather.addSource(unitSpecificData, mWeeklyWeather::setValue)
         }
         return mWeeklyWeather
     }
@@ -67,15 +74,19 @@ class ForecastRepositoryImpl(
 
     override fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry> {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val unitSpecificData = withContext(Dispatchers.IO) {
-                initWeatherData()
+        CoroutineScope(Dispatchers.IO).launch {
+            //Fetch data from the Internet
+            initWeatherData()
+
+            //Load persisted data from db
+            val unitSpecificData =
                 with(currentWeatherDao) {
                     if (isMetric) weatherMetric
                     else weatherImperial
                 }
-            }
-            mCurrentWeather.addSource(unitSpecificData, mCurrentWeather::setValue)
+
+            //Observe data changes on the Main thread
+            withContext(Dispatchers.Main) { mCurrentWeather.addSource(unitSpecificData, mCurrentWeather::setValue) }
         }
         return mCurrentWeather
     }
@@ -84,15 +95,20 @@ class ForecastRepositoryImpl(
 
     override val weatherLocation: LiveData<WeatherLocation>
         get() {
-            CoroutineScope(Dispatchers.Main).launch {
-                val locationData = withContext(Dispatchers.IO) { locationDao.weatherLocation }
-                mWeatherLocation.addSource(locationData, mWeatherLocation::setValue)
+            CoroutineScope(Dispatchers.IO).launch {
+
+                //Load persisted data from db
+                val locationData = locationDao.weatherLocation
+
+                //Observe data changes on the Main thread
+                withContext(Dispatchers.Main) { mWeatherLocation.addSource(locationData, mWeatherLocation::setValue) }
             }
             return mWeatherLocation
         }
 
 
     private fun persistFetchedCurrentWeather(fetchedCurrentWeather: WeatherResponse) {
+        //Persist Fetched Data from Internet
         CoroutineScope(Dispatchers.IO).launch {
             locationDao.upsert(fetchedCurrentWeather.weatherLocation)
             currentWeatherDao.upsert(fetchedCurrentWeather.currentWeatherEntry)
@@ -103,12 +119,18 @@ class ForecastRepositoryImpl(
 
 
     private suspend fun initWeatherData() {
+        //Get Last Found Location
         val lastLocation = mWeatherLocation.value
 
+        //If last found location is null or device location is different than the last found location
+        //fetch data from the Internet and return from the function
         if (null == lastLocation || locationProvider.hasLocationChanged(lastLocation)) {
             fetchCurrentWeather()
             return
         }
+
+        //Check if fetching of data is needed
+        //If needed, fetch data from the Internet
         if (isFetchCurrentNeeded(lastLocation.zonedDateTime))
             fetchCurrentWeather()
     }
@@ -119,7 +141,7 @@ class ForecastRepositoryImpl(
     }
 
     private suspend fun fetchCurrentWeather() {
-
+        //Fetch data from the Internet
         weatherNetworkDataSource.fetchCurrentWeather(
             locationProvider.getPreferredLocation(),
             Locale.getDefault().language
