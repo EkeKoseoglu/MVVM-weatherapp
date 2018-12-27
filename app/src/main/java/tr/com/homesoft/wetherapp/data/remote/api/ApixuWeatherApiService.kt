@@ -3,6 +3,7 @@ package tr.com.homesoft.wetherapp.data.remote.api
 
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 import tr.com.homesoft.wetherapp.data.remote.ConnectivityInterceptor
 import tr.com.homesoft.wetherapp.data.remote.response.WeatherResponse
@@ -10,6 +11,7 @@ import tr.com.homesoft.wetherapp.data.remote.response.WeatherResponse
 
 interface ApixuWeatherApiService {
 
+    @Headers("Content-Type: application/json")
     @GET("forecast.json")
     fun getForecastsByCity(
         @Query("q") city: String,
