@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 import tr.com.homesoft.wetherapp.R
+import tr.com.homesoft.wetherapp.util.extensions.formatDate
 import tr.com.homesoft.wetherapp.util.extensions.getParentActivity
 import tr.com.homesoft.wetherapp.util.extensions.loadUrl
 
@@ -18,9 +17,7 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("formatDate")
     fun formatDate(view: TextView, date: String) {
-        val local = LocalDate.parse(date)
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-        view.text = local.format(formatter)
+        view.text = date.formatDate("dd.MM.yyyy")
     }
 
     @JvmStatic
