@@ -1,13 +1,11 @@
 package tr.com.homesoft.wetherapp.ui.state
 
-import androidx.annotation.StringRes
+sealed class UIState
 
-sealed class UIState<out T: Any>
+object Loading : UIState()
 
-object  Loading: UIState<Nothing>()
+object HasData : UIState()
 
-class  HasData<out T: Any>(val data: T): UIState<T>()
+object NoData : UIState()
 
-object  NoData: UIState<Nothing>()
-
-class  Error<out T: Any>(@StringRes val erroMessageId: Int): UIState<T>()
+object Error : UIState()

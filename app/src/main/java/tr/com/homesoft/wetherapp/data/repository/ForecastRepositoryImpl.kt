@@ -36,13 +36,15 @@ class ForecastRepositoryImpl(
 
     override fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val data = withContext(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val data =
                 with(weeklyWeatherDao) {
                     if (isMetric) findMetricByDate(date) else findImperialByDate(date)
                 }
+
+            withContext(Dispatchers.Main) {
+                mDetailForecast.addSource(data, mDetailForecast::setValue)
             }
-            mDetailForecast.addSource(data, mDetailForecast::setValue)
         }
         return mDetailForecast
     }
@@ -86,7 +88,11 @@ class ForecastRepositoryImpl(
                 }
 
             //Observe data changes on the Main thread
-            withContext(Dispatchers.Main) { mCurrentWeather.addSource(unitSpecificData, mCurrentWeather::setValue) }
+            withContext(Dispatchers.Main) {
+                mCurrentWeather.addSource(unitSpecificData) {
+                    mCurrentWeather.value = it
+                }
+            }
         }
         return mCurrentWeather
     }
@@ -126,7 +132,8 @@ class ForecastRepositoryImpl(
         //fetch data from the Internet and return from the function
         if (null == lastLocation ||
             isFetchCurrentNeeded(lastLocation.zonedDateTime) ||
-            locationProvider.hasLocationChanged(lastLocation) ) {
+            locationProvider.hasLocationChanged(lastLocation)
+        ) {
             fetchCurrentWeather()
         }
 
@@ -137,7 +144,7 @@ class ForecastRepositoryImpl(
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
-        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(1)
+        val thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30)
         return lastFetchTime.isBefore(thirtyMinutesAgo)
     }
 

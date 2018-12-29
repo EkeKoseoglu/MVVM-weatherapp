@@ -46,10 +46,10 @@ class CurrentFragment : Fragment() {
                     Loading -> {
                         loading.value = true
                     }
-                    is HasData<*> -> {
+                    HasData -> {
                         loading.value = false
                     }
-                    is Error<*> -> {
+                    Error -> {
                         loading.value = false
                     }
                 }
@@ -57,7 +57,7 @@ class CurrentFragment : Fragment() {
 
 
             currentWeatherForecast.observe(viewLifecycleOwner, Observer {
-                uiState.value = HasData(it)
+                uiState.value = HasData
             })
 
 

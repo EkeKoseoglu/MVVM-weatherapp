@@ -12,7 +12,7 @@ import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
 
-    val uiState = MutableLiveData<UIState<*>>()
+    val uiState = MutableLiveData<UIState>()
 
     internal val location = repository.weatherLocation
 

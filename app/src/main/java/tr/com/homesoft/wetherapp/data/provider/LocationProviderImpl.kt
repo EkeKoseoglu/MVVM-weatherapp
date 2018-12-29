@@ -10,6 +10,7 @@ import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.remote.internal.LocationPermissionNotGrantedException
 import tr.com.homesoft.wetherapp.util.extensions.isPermissionGranted
+import tr.com.homesoft.wetherapp.util.extensions.logd
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -52,6 +53,7 @@ class LocationProviderImpl(
 
         val deviceLocation = getLastDeviceLocation() ?: return false
 
+        logd { "TAG: ${deviceLocation.latitude}, ${deviceLocation.longitude}" }
         val comparisonThreshold = 0.03
 
         return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
@@ -75,7 +77,7 @@ class LocationProviderImpl(
         if (isUsingDeviceLocation()) {
             try {
                 val deviceLocation = getLastDeviceLocation() ?: return getCustomLocationName()
-                return "${deviceLocation.latitude}, ${deviceLocation.longitude}"
+                return "${deviceLocation.latitude},${deviceLocation.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
                 return getCustomLocationName()
             }

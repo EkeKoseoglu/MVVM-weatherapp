@@ -49,6 +49,7 @@ dependencies {
     def preferenceVersion = '1.1.0-alpha02'
     def locationService = '16.0.0'
     def lifecycle_version = '2.0.0'
+    def anko_version='0.10.8'
 
 
 
@@ -92,6 +93,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+
+    //Anko Coroutines
+    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koinVersion"
