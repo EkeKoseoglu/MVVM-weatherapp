@@ -1,14 +1,17 @@
 package tr.com.homesoft.wetherapp.data.local.converter
 
 import androidx.room.TypeConverter
-import java.util.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
-class DateConverter {
-
-    @TypeConverter
-    fun toDate(timestamp: Long?) = timestamp?.let { Date(it) }
+object DateConverter {
 
     @TypeConverter
-    fun toTimestamp(date: Date?) = date?.time
+    @JvmStatic
+    fun strToDate(str: String?) = str?.let { LocalDate.parse(it, DateTimeFormatter.ISO_LOCAL_DATE) }
+
+    @TypeConverter
+    @JvmStatic
+    fun dateToString(date: LocalDate?) = date?.format(DateTimeFormatter.ISO_LOCAL_DATE)
 
 }
