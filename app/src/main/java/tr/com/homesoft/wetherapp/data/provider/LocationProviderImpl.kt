@@ -53,7 +53,6 @@ class LocationProviderImpl(
 
         val deviceLocation = getLastDeviceLocation() ?: return false
 
-        logd { "TAG: ${deviceLocation.latitude}, ${deviceLocation.longitude}" }
         val comparisonThreshold = 0.03
 
         return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
