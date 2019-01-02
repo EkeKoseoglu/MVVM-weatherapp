@@ -1,11 +1,12 @@
 package tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly
 
+import org.threeten.bp.LocalDate
 import tr.com.homesoft.wetherapp.data.local.entity.Condition.Companion.CONDITION_PREFIX
 import tr.com.homesoft.wetherapp.data.local.entity.DayForecast.Companion.DAYFORECAST
 
 interface UnitSpecificWeeklyForecastEntry {
 
-    val date: String
+    val date: LocalDate
     val conditionText: String
     val conditionIconUrl: String
     val maxTemperature: Double

@@ -1,6 +1,7 @@
 package tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly
 
 import androidx.room.ColumnInfo
+import org.threeten.bp.LocalDate
 import tr.com.homesoft.wetherapp.data.local.entity.DayForecast.Companion.DAYFORECAST
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.CONDITION_ICON
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.CONDITION_TEXT
@@ -9,7 +10,7 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWee
 
 data class ImperialWeeklyForecastEntry(
     @ColumnInfo(name = DATE_TIME)
-    override val date: String,
+    override val date: LocalDate,
     @ColumnInfo(name = CONDITION_TEXT)
     override val conditionText: String,
     @ColumnInfo(name = CONDITION_ICON)
