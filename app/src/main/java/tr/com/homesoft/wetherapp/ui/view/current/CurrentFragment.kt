@@ -46,19 +46,14 @@ class CurrentFragment : Fragment() {
                 when (it) {
                     UIState.Loading -> {
                         loading.set(true)
-/*                        group_loading.visibility = android.view.View.VISIBLE
-                        group_weather_info.visibility = android.view.View.GONE*/
                     }
 
                     UIState.HasData -> {
                         loading.set(false)
-/*                        group_loading.visibility = android.view.View.GONE
-                        group_weather_info.visibility = android.view.View.VISIBLE*/
                     }
 
                     is Error -> {
-                        group_loading.visibility = android.view.View.GONE
-                        group_weather_info.visibility = android.view.View.GONE
+                        loading.set(false)
                     }
                 }
             })
