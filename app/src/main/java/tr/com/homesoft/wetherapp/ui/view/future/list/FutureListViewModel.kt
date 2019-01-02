@@ -1,5 +1,6 @@
 package tr.com.homesoft.wetherapp.ui.view.future.list
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,6 +46,8 @@ class FutureListViewModel(private val repository: ForecastRepository, unitProvid
         }
         return location
     }
+
+    val loading = ObservableBoolean()
 
     init {
         unitSystem.value = unitProvider.getUnitSystem()
