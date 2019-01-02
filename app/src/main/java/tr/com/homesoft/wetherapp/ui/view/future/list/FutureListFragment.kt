@@ -20,8 +20,6 @@ import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class FutureListFragment : Fragment() {
 
-    private val unitProvider: UnitProvider by inject()
-
     private val viewModel: FutureListViewModel by inject()
 
     private val binding: FutureListFragmentBinding by inflate(R.layout.future_list_fragment)
@@ -54,7 +52,7 @@ class FutureListFragment : Fragment() {
 
             setLifecycleOwner(this@FutureListFragment.activity)
             vm = viewModel.apply { loading.value = true }
-            //loading = true
+
         }
 
         bindUI()
@@ -69,50 +67,14 @@ class FutureListFragment : Fragment() {
 
                 loading.value = false
                 with(forecastAdapter) {
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
                     forecastDataList = it
                 }
             })
 
-            /*
-            weeklyWeather.observe(viewLifecycleOwner, Observer {
-                if (null == it) return@Observer
-
-                loading.value = false
-                //binding.loading = false
-
-                with(forecastAdapter) {
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    forecastDataList = it
-                }
+            metric.observe(viewLifecycleOwner, Observer {
+                forecastAdapter.isMetric = it
             })
-            */
-            /*
-            getWeeklyForecast().observe(viewLifecycleOwner, Observer {
 
-                if (null == it) return@Observer
-
-                binding.loading = false
-
-                with(forecastAdapter) {
-                    isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    forecastDataList = it
-                }
-            })
-            */
-/*
-            getWeatherLocation().observe(viewLifecycleOwner, Observer { weatherLocation ->
-                (activity as AppCompatActivity).apply {
-
-                    supportActionBar?.let {
-                        with(it) {
-                            setSubtitle(R.string.weekly)
-                            title = weatherLocation.name
-                        }
-                    }
-                }
-            })
-  */
             location.observe(viewLifecycleOwner, Observer {
                 (activity as AppCompatActivity).apply {
 
@@ -128,7 +90,7 @@ class FutureListFragment : Fragment() {
     }
 
     private fun detailItemClicked(unitSpecificWeeklyForecastEntry: Any) {
-        val date = (unitSpecificWeeklyForecastEntry as UnitSpecificWeeklyForecastEntry).date
+        val date = (unitSpecificWeeklyForecastEntry as UnitSpecificWeeklyForecastEntry).date.toString()
         val direction =
             FutureListFragmentDirections.actionFutureListFragmentToFutureDetailFragment(date)
         findNavController().navigate(direction)
