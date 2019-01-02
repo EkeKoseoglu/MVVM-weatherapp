@@ -46,18 +46,15 @@ dependencies {
     def coroutineVersion = '1.0.1'
     def koinVersion = '1.0.2'
     def glideVersion = '4.8.0'
-    def preferenceVersion = '1.1.0-alpha02'
-    def locationService = '16.0.0'
     def lifecycle_version = '2.0.0'
-    def anko_version='0.10.8'
-
-
+    
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     //Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
@@ -66,6 +63,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
+    //Material Design
     implementation 'com.google.android.material:material:1.1.0-alpha02'
 
     // Navigation
@@ -94,8 +92,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
 
-    //Anko Coroutines
-    implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koinVersion"
@@ -109,13 +105,12 @@ dependencies {
     //Glide components
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
-    implementation "com.google.android.gms:play-services-location:$locationService"
+    implementation "com.google.android.gms:play-services-location:16.0.0"
 
 
     // Preference
-    implementation "androidx.preference:preference:$preferenceVersion"
+    implementation "androidx.preference:preference:1.1.0-alpha02"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.2'
 }

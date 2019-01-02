@@ -25,11 +25,8 @@ import tr.com.homesoft.wetherapp.ui.view.future.list.FutureListViewModel
 val appModule = module {
 
     single { ForecastDatabase(get()) }
-
     single { get<ForecastDatabase>().currentWeatherDao() }
-
     single { get<ForecastDatabase>().weeklyWeatherDao() }
-
     single { get<ForecastDatabase>().locationDao() }
 
     singleBy<ConnectivityInterceptor, ConnectivityInterceptorImpl>()
@@ -39,11 +36,8 @@ val appModule = module {
     factory { LocationServices.getFusedLocationProviderClient(androidApplication()) }
 
     singleBy<UnitProvider, UnitProviderImpl>()
-
     singleBy<LocationProvider, LocationProviderImpl>()
-
     singleBy<WeatherNetworkDataSource, WeatherNetworkDataSourceImpl>()
-
     singleBy<ForecastRepository, ForecastRepositoryImpl>()
 
     viewModel<CurrentViewModel>()
