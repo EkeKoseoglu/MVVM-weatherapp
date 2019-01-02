@@ -7,12 +7,12 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWee
 
 interface ForecastRepository {
 
-    fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry>
+    suspend fun getCurrentWeather(isMetric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry>
 
-    fun getWeeklyWeather(isMetric: Boolean): LiveData<List<UnitSpecificWeeklyForecastEntry>>
+    suspend fun getWeeklyWeather(isMetric: Boolean): LiveData<out List<UnitSpecificWeeklyForecastEntry>>
 
-    fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry>
+    suspend fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<out UnitSpecificWeeklyForecastEntry>
 
-    val weatherLocation: LiveData<WeatherLocation>
+    suspend fun getWeatherLocation(): LiveData<WeatherLocation>
 
 }

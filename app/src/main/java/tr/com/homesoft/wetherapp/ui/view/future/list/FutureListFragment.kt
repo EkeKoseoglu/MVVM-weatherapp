@@ -51,42 +51,40 @@ class FutureListFragment : Fragment() {
             }
 
             setLifecycleOwner(this@FutureListFragment.activity)
-            vm = viewModel.apply { loading.value = true }
-
+            vm = viewModel
+            futureListGroupLoading.visibility = View.VISIBLE
         }
 
         bindUI()
     }
 
     private fun bindUI() {
-
         with(viewModel) {
-
-            weeklyWeatherForecast.observe(viewLifecycleOwner, Observer {
-                if (null == it) return@Observer
-
-                loading.value = false
-                with(forecastAdapter) {
-                    forecastDataList = it
-                }
-            })
 
             metric.observe(viewLifecycleOwner, Observer {
                 forecastAdapter.isMetric = it
             })
 
-            location.observe(viewLifecycleOwner, Observer {
-                (activity as AppCompatActivity).apply {
+            futureWeather.observe(viewLifecycleOwner, Observer {
+                binding.futureListGroupLoading.visibility = View.GONE
+                forecastAdapter.forecastDataList = it
+            })
 
-                    supportActionBar?.let { actionBar ->
-                        with(actionBar) {
-                            setSubtitle(R.string.weekly)
-                            title = it.name
-                        }
-                    }
-                }
+            weatherLocation.observe(viewLifecycleOwner, Observer { location ->
+                if (location == null) return@Observer
+                updateLocation(location.name)
+                updateDateToNextWeek()
             })
         }
+    }
+
+    private fun updateLocation(location: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+    }
+
+    private fun updateDateToNextWeek() {
+        (activity as? AppCompatActivity)?.supportActionBar
+            ?.subtitle = getString(R.string.weekly)
     }
 
     private fun detailItemClicked(unitSpecificWeeklyForecastEntry: Any) {

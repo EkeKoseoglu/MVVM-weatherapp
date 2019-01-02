@@ -23,10 +23,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:constraint_referenced_ids="textView_loading,progressBar_loading"
-                android:id="@+id/group_loading"
+                android:id="@+id/future_list_group_loading"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/forecast_rv"
-                android:visibility="@{safeUnbox(vm.loading)}"/>
+                app:layout_constraintStart_toStartOf="@+id/forecast_rv"/>
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"

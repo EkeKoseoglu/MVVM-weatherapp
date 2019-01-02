@@ -16,8 +16,6 @@ import tr.com.homesoft.wetherapp.ui.delegates.inflate
 
 class FutureDetailFragment : Fragment() {
 
-    //private val unitProvider: UnitProvider by inject()
-
     private val viewModel: FutureDetailViewModel by inject()
 
     private val binding: FutureDetailFragmentBinding by inflate(R.layout.future_detail_fragment)
@@ -38,7 +36,6 @@ class FutureDetailFragment : Fragment() {
 
         with(binding) {
             vm = viewModel.apply { loading.value = true }
-            //isLoading = true
             setLifecycleOwner(this@FutureDetailFragment.activity)
         }
 
@@ -47,7 +44,7 @@ class FutureDetailFragment : Fragment() {
 
     private fun bindUI() {
 
-        with(viewModel) {
+/*        with(viewModel) {
 
             val forecast = getDetailForecastByDate(date)
 
@@ -55,29 +52,9 @@ class FutureDetailFragment : Fragment() {
 
                 loading.value = false
                 setDetailForecast(it)
-                /*
-                with(binding) {
-                    //isMetric = unitProvider.getUnitSystem() == UnitSystem.METRIC
-                    //isLoading = false
-                    //obj = it
-                }
-                */
-            })
+            }
 
-            /*
-            getWeatherLocation().observe(viewLifecycleOwner, Observer { weatherLocation ->
-                (activity as AppCompatActivity).apply {
-
-                    supportActionBar?.let {
-                        with(it) {
-                            subtitle = date
-                            title = weatherLocation.name
-                        }
-                    }
-                }
-            })
-            */
-            location.observe(viewLifecycleOwner, Observer {
+            weatherLocation.observe(viewLifecycleOwner, Observer {
                 (activity as AppCompatActivity).apply {
 
                     supportActionBar?.let { actionBar ->
@@ -92,7 +69,7 @@ class FutureDetailFragment : Fragment() {
                 }
             })
 
-        }
+        }*/
 
     }
 

@@ -32,7 +32,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 tools:ignore="ContentDescription"/>
         <TextView
-                app:formatDate="@{obj.date}"
+                app:dateFormat="@{obj.date}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_date"

@@ -1,7 +1,6 @@
 package tr.com.homesoft.wetherapp.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,90 +25,56 @@ class ForecastRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
+    private var lastWeatherLocation: WeatherLocation? = null
+
     init {
         weatherNetworkDataSource.downloadedCurrentWeather.observeForever { newCurrentWeather ->
             persistFetchedCurrentWeather(newCurrentWeather)
+            lastWeatherLocation = newCurrentWeather.weatherLocation
         }
     }
 
-    private val mDetailForecast = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
 
-    override fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
+    override suspend fun getDetailWeatherByDate(
+        date: String,
+        isMetric: Boolean
+    ): LiveData<out UnitSpecificWeeklyForecastEntry> =
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val data =
-                with(weeklyWeatherDao) {
-                    if (isMetric) findMetricByDate(date) else findImperialByDate(date)
-                }
-
-            withContext(Dispatchers.Main) {
-                mDetailForecast.addSource(data, mDetailForecast::setValue)
+        withContext(Dispatchers.IO) {
+            with(weeklyWeatherDao) {
+                if (isMetric) findMetricByDate(date) else findImperialByDate(date)
             }
         }
-        return mDetailForecast
-    }
 
-    private val mWeeklyWeather = MediatorLiveData<List<UnitSpecificWeeklyForecastEntry>>()
 
-    override fun getWeeklyWeather(isMetric: Boolean): LiveData<List<UnitSpecificWeeklyForecastEntry>> {
+    override suspend fun getWeeklyWeather(isMetric: Boolean): LiveData<out List<UnitSpecificWeeklyForecastEntry>> =
 
-        CoroutineScope(Dispatchers.IO).launch {
+        withContext(Dispatchers.IO) {
             //Fetch data from the Internet
             initWeatherData()
 
             //Load persisted data from db
-            val unitSpecificData =
-                with(weeklyWeatherDao) {
-                    if (isMetric) metricWeeklyForecast
-                    else imperialWeatherForecast
-                }
 
-            //Observe data changes on the Main thread
-            withContext(Dispatchers.Main) {
-                mWeeklyWeather.addSource(unitSpecificData, mWeeklyWeather::setValue)
+            with(weeklyWeatherDao) {
+                if (isMetric) metricWeeklyForecast
+                else imperialWeatherForecast
             }
         }
-        return mWeeklyWeather
-    }
 
-    private val mCurrentWeather = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
 
-    override fun getCurrentWeather(isMetric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry> {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            //Fetch data from the Internet
+    override suspend fun getCurrentWeather(isMetric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> =
+        withContext(Dispatchers.IO) {
             initWeatherData()
-
-            //Load persisted data from db
-            val unitSpecificData =
-                with(currentWeatherDao) {
-                    if (isMetric) weatherMetric
-                    else weatherImperial
-                }
-
-            //Observe data changes on the Main thread
-            withContext(Dispatchers.Main) {
-                mCurrentWeather.addSource(unitSpecificData) {
-                    mCurrentWeather.value = it
-                }
+            with(currentWeatherDao) {
+                if (isMetric) weatherMetric
+                else weatherImperial
             }
         }
-        return mCurrentWeather
-    }
 
-    private val mWeatherLocation = MediatorLiveData<WeatherLocation>()
 
-    override val weatherLocation: LiveData<WeatherLocation>
-        get() {
-            CoroutineScope(Dispatchers.IO).launch {
-
-                //Load persisted data from db
-                val locationData = locationDao.weatherLocation
-
-                //Observe data changes on the Main thread
-                withContext(Dispatchers.Main) { mWeatherLocation.addSource(locationData, mWeatherLocation::setValue) }
-            }
-            return mWeatherLocation
+    override suspend fun getWeatherLocation(): LiveData<WeatherLocation> =
+        withContext(Dispatchers.IO) {
+            return@withContext locationDao.weatherLocation
         }
 
 
@@ -125,22 +90,20 @@ class ForecastRepositoryImpl(
 
 
     private suspend fun initWeatherData() {
-        //Get Last Found Location
-        val lastLocation = mWeatherLocation.value
 
         //If last found location is null or device location is different than the last found location
         //fetch data from the Internet and return from the function
-        if (null == lastLocation ||
-            isFetchCurrentNeeded(lastLocation.zonedDateTime) ||
-            locationProvider.hasLocationChanged(lastLocation)
+        if (null == lastWeatherLocation ||
+            locationProvider.hasLocationChanged(lastWeatherLocation!!)
         ) {
             fetchCurrentWeather()
+            return
         }
 
-/*        //Check if fetching of data is needed
+        //Check if fetching of data is needed
         //If needed, fetch data from the Internet
-        if (isFetchCurrentNeeded(lastLocation.zonedDateTime))
-            fetchCurrentWeather()*/
+        if (isFetchCurrentNeeded(lastWeatherLocation!!.zonedDateTime))
+            fetchCurrentWeather()
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {

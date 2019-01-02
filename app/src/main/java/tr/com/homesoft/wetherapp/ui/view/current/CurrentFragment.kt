@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.current_fragment.*
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
@@ -21,7 +22,10 @@ class CurrentFragment : Fragment() {
 
     private val binding: CurrentFragmentBinding by inflate(R.layout.current_fragment)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return binding.root
     }
 
@@ -30,9 +34,8 @@ class CurrentFragment : Fragment() {
 
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
-            vm = viewModel.apply {
-                uiState.value = Loading
-            }
+            vm = viewModel
+            viewModel.uiState.value = Loading
         }
         bindUI()
     }
@@ -44,40 +47,45 @@ class CurrentFragment : Fragment() {
             uiState.observe(viewLifecycleOwner, Observer {
                 when (it) {
                     Loading -> {
-                        loading.value = true
+                        loading.set(true)
+/*                        group_loading.visibility = android.view.View.VISIBLE
+                        group_weather_info.visibility = android.view.View.GONE*/
                     }
+
                     HasData -> {
-                        loading.value = false
+                        loading.set(false)
+/*                        group_loading.visibility = android.view.View.GONE
+                        group_weather_info.visibility = android.view.View.VISIBLE*/
                     }
-                    Error -> {
-                        loading.value = false
+
+                    is Error -> {
+                        group_loading.visibility = android.view.View.GONE
+                        group_weather_info.visibility = android.view.View.GONE
                     }
                 }
             })
 
+            weatherLocation.observe(viewLifecycleOwner, Observer { location ->
+                if (location == null) return@Observer
+                updateLocation(location.name)
+                updateDateToToday()
+            })
 
-            currentWeatherForecast.observe(viewLifecycleOwner, Observer {
+            weather.observe(viewLifecycleOwner, Observer {
+                if (it == null) return@Observer
                 uiState.value = HasData
             })
 
-
-            location.observe(viewLifecycleOwner, Observer {
-
-                if (null == it) return@Observer
-
-                (activity as AppCompatActivity).apply {
-
-                    supportActionBar?.let { actionBar ->
-                        with(actionBar) {
-                            setSubtitle(R.string.today)
-                            title = it.name
-                        }
-                    }
-                }
-            })
-
-
         }
+    }
+
+    private fun updateLocation(location: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+    }
+
+    private fun updateDateToToday() {
+        (activity as? AppCompatActivity)?.supportActionBar
+            ?.subtitle = getString(R.string.today)
     }
 
 }

@@ -28,7 +28,7 @@
                 android:layout_height="0dp"
                 app:constraint_referenced_ids="progressBar_loading,textView_loading"
                 android:id="@+id/group_loading"
-                android:visibility="@{safeUnbox(vm.loading)}"/>
+                android:visibility="@{vm.loading}"/>
         <ProgressBar
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
@@ -55,11 +55,11 @@
         <androidx.constraintlayout.widget.Group
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:id="@+id/weather_info"
-                android:visibility="@{!safeUnbox(vm.loading)}"
-                app:constraint_referenced_ids="textView_condition,textView_temperature,textView_feels_like,textView_wind_label,textView_precipitation_label,textView_visibility_label,textView_humidity_label,textView_pressure_label,textView_wind_speed,textView_wind_direction,imageView2,textView_precipitation,textView_visibility,textView_humidity,textView_pressure"/>
+                android:id="@+id/group_weather_info"
+                android:visibility="@{!vm.loading}"
+                app:constraint_referenced_ids="textView_condition,textView_temperature,textView_feels_like,textView_wind_label,textView_precipitation_label,textView_visibility_label,textView_humidity_label,textView_pressure_label,textView_wind_speed,textView_wind_direction,imageView2,textView_precipitation,textView_visibility,textView_humidity,textView_pressure,weather_icon"/>
         <TextView
-                android:text="@{vm.currentWeatherForecast.conditionText}"
+                android:text="@{vm.weather.conditionText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_condition" android:layout_marginTop="8dp"
@@ -71,7 +71,7 @@
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.04" app:layout_constraintHorizontal_bias="0.04"/>
         <TextView
-                app:formatTemp="@{vm.currentWeatherForecast.temperature}"
+                app:formatTemp="@{vm.weather.temperature}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toTopOf="@+id/weather_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/weather_icon"/>
         <ImageView
-                android:src="@{vm.currentWeatherForecast.conditionIconUrl}"
+                android:src="@{vm.weather.conditionIconUrl}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/weather_icon"
@@ -95,7 +95,7 @@
                 app:layout_constraintDimensionRatio="1:1" app:layout_constraintHorizontal_bias="0.593"
                 app:layout_constraintWidth_percent="0.25" tools:ignore="ContentDescription"/>
         <TextView
-                app:formatFeelsLikeTemperature="@{vm.currentWeatherForecast.feelsLikeTemperature}"
+                app:formatFeelsLikeTemperature="@{vm.weather.feelsLikeTemperature}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:text="@string/pressure_label"/>
         <TextView
-                app:formatWind="@{vm.currentWeatherForecast.windSpeed}"
+                app:formatWind="@{vm.weather.windSpeed}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textView_wind_label" android:layout_marginStart="8dp"
                 tools:text="15 m/s" android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
         <TextView
-                android:text="@{vm.currentWeatherForecast.windDirection}"
+                android:text="@{vm.weather.windDirection}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_wind_direction"
@@ -173,7 +173,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView_wind_speed"
                 app:layout_constraintStart_toEndOf="@+id/textView_wind_speed" android:layout_marginStart="8dp"/>
         <ImageView
-                android:src="@{vm.currentWeatherForecast.windDegree}"
+                android:src="@{vm.weather.windDegree}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/imageView2"
@@ -184,7 +184,7 @@
                 tools:ignore="ContentDescription"
                 tools:srcCompat="@drawable/wind_direction_n"/>
         <TextView
-                app:formatPrecipitaion="@{vm.currentWeatherForecast.precipitationVolume}"
+                app:formatPrecipitaion="@{vm.weather.precipitationVolume}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                 android:layout_marginStart="8dp" tools:text="15 mm"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
         <TextView
-                app:formatVisibilityDistance="@{vm.currentWeatherForecast.visibilityDistance}"
+                app:formatVisibilityDistance="@{vm.weather.visibilityDistance}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textView_visibility_label" android:layout_marginStart="8dp"
                 tools:text="80 km" android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
         <TextView
-                android:text="@{@string/format_humidity(vm.currentWeatherForecast.humidity)}"
+                android:text="@{@string/format_humidity(vm.weather.humidity)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_humidity"
@@ -214,7 +214,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textView_humidity_label" android:layout_marginStart="8dp"
                 tools:text="85%" android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
         <TextView
-                app:formatPressure="@{vm.currentWeatherForecast.pressure}"
+                app:formatPressure="@{vm.weather.pressure}"
                 app:metric="@{safeUnbox(vm.metric)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,36 +1,62 @@
 package tr.com.homesoft.wetherapp.ui.view.current
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.launch
+import tr.com.homesoft.wetherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
+import tr.com.homesoft.wetherapp.ui.base.ScopedViewModel
 import tr.com.homesoft.wetherapp.ui.state.UIState
 import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
-class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ViewModel() {
-
-    val uiState = MutableLiveData<UIState>()
-
-    internal val location = repository.weatherLocation
+class CurrentViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ScopedViewModel() {
 
     private val unitSystem = MutableLiveData<UnitSystem>()
-    val metric: LiveData<Boolean> = Transformations.map(unitSystem) {
-        it == UnitSystem.METRIC
+
+    val isMetric: LiveData<Boolean> = Transformations.map(unitSystem) { it == UnitSystem.METRIC }
+
+    val weather: LiveData<UnitSpecificCurrentWeatherEntry> = Transformations.switchMap(isMetric) {
+        getCurrentWeather(it)
     }
 
-    val currentWeatherForecast: LiveData<UnitSpecificCurrentWeatherEntry> =
-        Transformations.switchMap(metric) {
-            repository.getCurrentWeather(it)
+    private fun getCurrentWeather(metric: Boolean): LiveData<UnitSpecificCurrentWeatherEntry> {
+        val current = MediatorLiveData<UnitSpecificCurrentWeatherEntry>()
+        launch {
+            val result = repository.getCurrentWeather(metric)
+            current.addSource(result) {
+                current.postValue(it)
+                current.removeSource(result)
+            }
         }
+        return current
+    }
 
-    val loading = MutableLiveData<Boolean>()
+    val weatherLocation: LiveData<WeatherLocation> = getLocation()
+
+    private fun getLocation(): LiveData<WeatherLocation> {
+        val location = MediatorLiveData<WeatherLocation>()
+        launch {
+            val result = repository.getWeatherLocation()
+            location.addSource(result) {
+                location.postValue(it)
+                location.removeSource(result)
+            }
+        }
+        return location
+    }
+
+    internal val uiState = MutableLiveData<UIState>()
+
+    val loading = ObservableBoolean()
 
     init {
         unitSystem.value = unitProvider.getUnitSystem()
-
     }
+
 
 }
