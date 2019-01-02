@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry
-import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.databinding.FutureListFragmentBinding
 import tr.com.homesoft.wetherapp.ui.adapter.FutureForecastAdapter
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
-import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
+import tr.com.homesoft.wetherapp.ui.state.UIState
 
 class FutureListFragment : Fragment() {
 
@@ -52,7 +51,7 @@ class FutureListFragment : Fragment() {
 
             setLifecycleOwner(this@FutureListFragment.activity)
             vm = viewModel
-            futureListGroupLoading.visibility = View.VISIBLE
+            viewModel.uiState.value = UIState.Loading
         }
 
         bindUI()
@@ -61,13 +60,23 @@ class FutureListFragment : Fragment() {
     private fun bindUI() {
         with(viewModel) {
 
+            uiState.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    UIState.Loading -> loading.set(true)
+                    UIState.HasData -> {
+                        loading.set(false)
+                    }
+                    UIState.Error -> loading.set(false)
+                }
+            })
+
             metric.observe(viewLifecycleOwner, Observer {
                 forecastAdapter.isMetric = it
             })
 
             futureWeather.observe(viewLifecycleOwner, Observer {
-                binding.futureListGroupLoading.visibility = View.GONE
                 forecastAdapter.forecastDataList = it
+                uiState.value = UIState.HasData
             })
 
             weatherLocation.observe(viewLifecycleOwner, Observer { location ->

@@ -1,11 +1,12 @@
 package tr.com.homesoft.wetherapp.ui.state
 
-sealed class UIState
+sealed class UIState {
 
-object Loading : UIState()
+    object Loading : UIState()
 
-object HasData : UIState()
+    object HasData : UIState()
 
-object NoData : UIState()
+    object NoData : UIState()
 
-object Error : UIState()
+    object Error : UIState()
+}

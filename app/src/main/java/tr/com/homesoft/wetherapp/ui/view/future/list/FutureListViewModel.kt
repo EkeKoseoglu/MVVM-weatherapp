@@ -11,6 +11,7 @@ import tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWee
 import tr.com.homesoft.wetherapp.data.provider.UnitProvider
 import tr.com.homesoft.wetherapp.data.repository.ForecastRepository
 import tr.com.homesoft.wetherapp.ui.base.ScopedViewModel
+import tr.com.homesoft.wetherapp.ui.state.UIState
 import tr.com.homesoft.wetherapp.ui.unitsystem.UnitSystem
 
 class FutureListViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ScopedViewModel() {
@@ -48,6 +49,8 @@ class FutureListViewModel(private val repository: ForecastRepository, unitProvid
     }
 
     val loading = ObservableBoolean()
+
+    val uiState = MutableLiveData<UIState>()
 
     init {
         unitSystem.value = unitProvider.getUnitSystem()

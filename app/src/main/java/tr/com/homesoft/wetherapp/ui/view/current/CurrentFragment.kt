@@ -12,9 +12,7 @@ import org.koin.android.ext.android.inject
 import tr.com.homesoft.wetherapp.R
 import tr.com.homesoft.wetherapp.databinding.CurrentFragmentBinding
 import tr.com.homesoft.wetherapp.ui.delegates.inflate
-import tr.com.homesoft.wetherapp.ui.state.Error
-import tr.com.homesoft.wetherapp.ui.state.HasData
-import tr.com.homesoft.wetherapp.ui.state.Loading
+import tr.com.homesoft.wetherapp.ui.state.UIState
 
 class CurrentFragment : Fragment() {
 
@@ -35,7 +33,7 @@ class CurrentFragment : Fragment() {
         with(binding) {
             setLifecycleOwner(this@CurrentFragment.activity)
             vm = viewModel
-            viewModel.uiState.value = Loading
+            viewModel.uiState.value = UIState.Loading
         }
         bindUI()
     }
@@ -46,13 +44,13 @@ class CurrentFragment : Fragment() {
 
             uiState.observe(viewLifecycleOwner, Observer {
                 when (it) {
-                    Loading -> {
+                    UIState.Loading -> {
                         loading.set(true)
 /*                        group_loading.visibility = android.view.View.VISIBLE
                         group_weather_info.visibility = android.view.View.GONE*/
                     }
 
-                    HasData -> {
+                    UIState.HasData -> {
                         loading.set(false)
 /*                        group_loading.visibility = android.view.View.GONE
                         group_weather_info.visibility = android.view.View.VISIBLE*/
@@ -73,7 +71,7 @@ class CurrentFragment : Fragment() {
 
             weather.observe(viewLifecycleOwner, Observer {
                 if (it == null) return@Observer
-                uiState.value = HasData
+                uiState.value = UIState.HasData
             })
 
         }
