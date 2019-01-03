@@ -3,10 +3,6 @@ import org.jetbrains.kotlin.config.KotlinCompilerVersion
 plugins {
 
     id("com.android.application")
-/*    kotlin ("kapt") version "1.3.11"
-    kotlin("android")
-    kotlin("android.extensions")*/
-
     kotlin("android")
     kotlin("android.extensions")
     kotlin ("kapt")
