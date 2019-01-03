@@ -112,9 +112,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
 }
 
-tasks.withType<KotlinCompile>{
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+
 
