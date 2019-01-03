@@ -20,8 +20,8 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import tr.com.homesoft.weatherapp.R
-import tr.com.homesoft.weatherapp.data.gps.GpsStatus
 import tr.com.homesoft.weatherapp.data.remote.internal.PermissionsRequester
+import tr.com.homesoft.weatherapp.util.gps.GpsStatus
 
 
 class MainActivity : AppCompatActivity() {
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             is GpsStatus.Disabled -> {
-
+                handleGpsAlertDialog(GpsStatus.Disabled())
             }
         }
     }
