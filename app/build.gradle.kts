@@ -1,4 +1,6 @@
+import com.android.tools.r8.kotlin.KotlinClass
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 
@@ -78,8 +80,8 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
 
     // Kotlin & Coroutines
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation(kotlin("stdlib-jdk8", kotlinVersion))
+    implementation(kotlin("reflect", kotlinVersion))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
 
@@ -110,13 +112,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
 }
 
-/*
-android {
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+tasks.withType<KotlinCompile>{
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-
 }
-*/
+
