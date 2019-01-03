@@ -4,7 +4,7 @@
 
     <data>
 
-        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.future.detail.FutureDetailViewModel"/>
+        <variable name="vm" type="tr.com.homesoft.weatherapp.ui.view.future.detail.FutureDetailViewModel"/>
 
     </data>
 

@@ -4,7 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <!-- <variable name="loading" type="Boolean"/> -->
-        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.future.list.FutureListViewModel"/>
+        <variable name="vm" type="tr.com.homesoft.weatherapp.ui.view.future.list.FutureListViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

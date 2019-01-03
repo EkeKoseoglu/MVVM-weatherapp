@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" translatable="false">Wether App</string>
+    <string name="app_name" translatable="false">Weather App</string>
     <string name="today">Today</string>
     <string name="weekly">Next week</string>
     <string name="settings">Settings</string>
@@ -53,4 +53,9 @@
         %2$1.1f\u00b0</xliff:g>C
     </string>
     <string name="no_permissions">Please set location manually in settings</string>
+    <string name="gps_status_enabled">GPS is Enabled</string>
+    <string name="gps_status_disabled">GPS is Disabled</string>
+    <string name="gps_required_title">GPS Required</string>
+    <string name="gps_required_body">Enable GPS otherwise location tracking won\\\'t work</string>
+    <string name="action_settings">Settings</string>
 </resources>

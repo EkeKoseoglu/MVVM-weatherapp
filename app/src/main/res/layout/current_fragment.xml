@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="vm" type="tr.com.homesoft.wetherapp.ui.view.current.CurrentViewModel"/>
+        <variable name="vm" type="tr.com.homesoft.weatherapp.ui.view.current.CurrentViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

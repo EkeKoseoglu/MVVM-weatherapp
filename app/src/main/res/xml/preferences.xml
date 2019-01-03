@@ -9,7 +9,7 @@
                 android:defaultValue="true"
                 android:disableDependentsState="true"/>
 
-        <tr.com.homesoft.wetherapp.ui.view.settings.SummarizedEditTextPreference
+        <tr.com.homesoft.weatherapp.ui.view.settings.SummarizedEditTextPreference
                 android:capitalize="words"
                 android:key="@string/pref_custom_location_key"
                 android:defaultValue="@string/pref_loc_default_value"

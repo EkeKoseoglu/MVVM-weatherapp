@@ -6,11 +6,11 @@
             app:startDestination="@id/currentFragment">
 
     <fragment android:id="@+id/currentFragment"
-              android:name="tr.com.homesoft.wetherapp.ui.view.current.CurrentFragment"
+              android:name="tr.com.homesoft.weatherapp.ui.view.current.CurrentFragment"
                tools:layout="@layout/current_fragment"/>
 
     <fragment android:id="@+id/futureListFragment"
-              android:name="tr.com.homesoft.wetherapp.ui.view.future.list.FutureListFragment"
+              android:name="tr.com.homesoft.weatherapp.ui.view.future.list.FutureListFragment"
               tools:layout="@layout/future_list_fragment">
         <action android:id="@+id/action_futureListFragment_to_futureDetailFragment"
                 app:destination="@id/futureDetailFragment">
@@ -18,9 +18,9 @@
         </action>
     </fragment>
     <fragment android:id="@+id/futureDetailFragment"
-              android:name="tr.com.homesoft.wetherapp.ui.view.future.detail.FutureDetailFragment"
+              android:name="tr.com.homesoft.weatherapp.ui.view.future.detail.FutureDetailFragment"
               tools:layout="@layout/future_detail_fragment">
         <argument android:name="date" app:argType="string"/>
     </fragment>
-    <fragment android:id="@+id/settings" android:name="tr.com.homesoft.wetherapp.ui.view.settings.Settings"/>
+    <fragment android:id="@+id/settings" android:name="tr.com.homesoft.weatherapp.ui.view.settings.Settings"/>
 </navigation>

@@ -5,7 +5,7 @@
     <data>
         <variable name="isMetric" type="Boolean"/>
         <variable name="obj"
-                  type="tr.com.homesoft.wetherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry"/>
+                  type="tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

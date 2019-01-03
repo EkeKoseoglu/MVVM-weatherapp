@@ -22,4 +22,9 @@
     <string name="feels_like_temp_metric">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>C</string>
     <string name="feels_like_temp_imperial">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>F</string>
     <string name="no_permissions">Lütfen Ayarlar menüsünden Konum kullanımını aktifleştirin</string>
+    <string name="gps_status_enabled">GPS Etkin</string>
+    <string name="gps_status_disabled">GPS Devredışı</string>
+    <string name="gps_required_title">GPS Şart</string>
+    <string name="gps_required_body">GPS\'i tekinleştirin aksi takdirde konum bilgisi alınamayacak</string>
+    <string name="action_settings">Ayarlar</string>
 </resources>
