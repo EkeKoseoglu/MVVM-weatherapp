@@ -7,6 +7,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.Task
 import tr.com.homesoft.weatherapp.R
 import tr.com.homesoft.weatherapp.data.local.entity.WeatherLocation
+import tr.com.homesoft.weatherapp.data.remote.internal.LocationLiveData
 import tr.com.homesoft.weatherapp.data.remote.internal.LocationPermissionNotGrantedException
 import tr.com.homesoft.weatherapp.util.extensions.isPermissionGranted
 import kotlin.coroutines.resume
@@ -18,6 +19,8 @@ class LocationProviderImpl(
     private val fusedLocationProviderClient: FusedLocationProviderClient,
     context: Context
 ) : PreferenceProvider(context), LocationProvider {
+
+    override val locationLiveData: LocationLiveData by lazy { LocationLiveData(context) }
 
     override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation) : Boolean {
 
@@ -33,7 +36,9 @@ class LocationProviderImpl(
     }
 
 
-    private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) =
+    private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) = if (isUsingDeviceLocation())
+        false
+    else
         getCustomLocationName().toLowerCase() != lastWeatherLocation.name.toLowerCase()
 
 
