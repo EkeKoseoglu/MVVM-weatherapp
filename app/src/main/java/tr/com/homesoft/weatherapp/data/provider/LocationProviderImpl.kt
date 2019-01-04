@@ -1,28 +1,20 @@
 package tr.com.homesoft.weatherapp.data.provider
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.tasks.Task
 import tr.com.homesoft.weatherapp.R
 import tr.com.homesoft.weatherapp.data.local.entity.WeatherLocation
 import tr.com.homesoft.weatherapp.data.remote.internal.LocationLiveData
 import tr.com.homesoft.weatherapp.data.remote.internal.LocationPermissionNotGrantedException
-import tr.com.homesoft.weatherapp.util.extensions.isPermissionGranted
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
+import tr.com.homesoft.weatherapp.util.extensions.logd
 
 
 class LocationProviderImpl(
-    private val fusedLocationProviderClient: FusedLocationProviderClient,
     context: Context
 ) : PreferenceProvider(context), LocationProvider {
 
     override val locationLiveData: LocationLiveData by lazy { LocationLiveData(context) }
 
-    override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation) : Boolean {
+    override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
 
         val deviceLastLocation = try {
 
@@ -50,11 +42,11 @@ class LocationProviderImpl(
             )!!
         }
 
-    private suspend fun hasDeviceLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
+    private fun hasDeviceLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
         if (!isUsingDeviceLocation())
             return false
 
-        val deviceLocation = getLastDeviceLocation() ?: return false
+        val deviceLocation = locationLiveData.value ?: return false
 
         val comparisonThreshold = 0.03
 
@@ -62,14 +54,6 @@ class LocationProviderImpl(
                 Math.abs(deviceLocation.longitude - lastWeatherLocation.lon) > comparisonThreshold
     }
 
-    @SuppressLint("MissingPermission")
-    private suspend fun getLastDeviceLocation() = if (hasLocationPermission())
-        fusedLocationProviderClient.lastLocation.completeListener()
-    else
-        throw LocationPermissionNotGrantedException()
-
-    private fun hasLocationPermission() =
-        appContext.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private fun isUsingDeviceLocation() = with(appContext.getString(R.string.pref_use_device_location_key)) {
         preferences.getBoolean(this, true)
@@ -78,7 +62,9 @@ class LocationProviderImpl(
     override suspend fun getPreferredLocation(): String {
         if (isUsingDeviceLocation()) {
             try {
-                val deviceLocation = getLastDeviceLocation() ?: return getCustomLocationName()
+                logd { "TAG locationLiveData value : ${locationLiveData.value?.latitude}, ${locationLiveData.value?.longitude}" }
+                //val deviceLocation = getLastDeviceLocation() ?: return getCustomLocationName()
+                val deviceLocation = locationLiveData.value ?: return getCustomLocationName()
                 return "${deviceLocation.latitude},${deviceLocation.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
                 return getCustomLocationName()
@@ -88,7 +74,7 @@ class LocationProviderImpl(
         }
     }
 
-    private suspend fun <T> Task<T>.completeListener() = suspendCoroutine <T> { cont ->
+/*    private suspend fun <T> Task<T>.completeListener() = suspendCoroutine<T> { cont ->
         this.addOnCompleteListener {
             @Suppress("UNCHECKED_CAST")
             if (this.isSuccessful)
@@ -96,7 +82,7 @@ class LocationProviderImpl(
             else
                 cont.resumeWithException(this.exception!!)
         }
-    }
+    }*/
 
 }
 
