@@ -7,20 +7,16 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
 import tr.com.homesoft.weatherapp.R
 import tr.com.homesoft.weatherapp.data.remote.internal.PermissionsRequester
+import tr.com.homesoft.weatherapp.util.extensions.getViewModel
 import tr.com.homesoft.weatherapp.util.gps.GpsStatus
 
 
@@ -30,21 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private val permissionsRequester: PermissionsRequester by lazy { PermissionsRequester(this) }
 
-    private val fusedLocationProviderClient: FusedLocationProviderClient by inject()
-
-    private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(p0: LocationResult?) {
-            super.onLocationResult(p0)
-        }
-    }
-
-    private lateinit var viewModel: MainViewModel
-
-    private val gpsObserver = Observer<GpsStatus> { status ->
-        status?.let {
-            updateGpsCheckUI(status)
-        }
-    }
+    private val viewModel: MainViewModel by lazy { getViewModel { MainViewModel(this) } }
 
     private val navController: NavController by lazy { findNavController(R.id.nav_host_fragment) }
 
@@ -54,24 +36,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        setupBottomNav(navController)
-
         if (!permissionsRequester.hasPermissions()) {
             permissionsRequester.requestPermissions()
-        } else {
-            bindLocationManager()
         }
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
+        setupBottomNav(navController)
         subscribeToGpsListener()
     }
 
-    private fun subscribeToGpsListener() = viewModel.gpsStatusLiveData
-        .observe(this, gpsObserver)
-
-    private fun bindLocationManager() {
-        LifecycleBoundLocationManager(this, fusedLocationProviderClient, locationCallback)
-    }
+    private fun subscribeToGpsListener() =
+        viewModel.gpsStatusLiveData.observe(this, Observer<GpsStatus> { status ->
+            status?.let {
+                updateGpsCheckUI(status)
+            }
+        })
 
     private fun setupBottomNav(navController: NavController) {
         with(navController) {
@@ -138,4 +115,5 @@ class MainActivity : AppCompatActivity() {
     private fun hideGpsNotEnabledDialog() {
         if (alertDialog?.isShowing == true) alertDialog?.dismiss()
     }
+
 }
