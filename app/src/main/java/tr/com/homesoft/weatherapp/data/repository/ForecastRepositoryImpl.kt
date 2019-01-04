@@ -32,6 +32,12 @@ class ForecastRepositoryImpl(
             persistFetchedCurrentWeather(newCurrentWeather)
             lastWeatherLocation = newCurrentWeather.weatherLocation
         }
+
+        locationProvider.locationLiveData.observeForever {
+            CoroutineScope(Dispatchers.IO).launch {
+                initWeatherData()
+            }
+        }
     }
 
 
@@ -51,7 +57,7 @@ class ForecastRepositoryImpl(
 
         withContext(Dispatchers.IO) {
             //Fetch data from the Internet
-            initWeatherData()
+            //initWeatherData()
 
             //Load persisted data from db
 
@@ -64,7 +70,7 @@ class ForecastRepositoryImpl(
 
     override suspend fun getCurrentWeather(isMetric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> =
         withContext(Dispatchers.IO) {
-            initWeatherData()
+            //initWeatherData()
             with(currentWeatherDao) {
                 if (isMetric) weatherMetric
                 else weatherImperial
