@@ -1,8 +1,8 @@
 package tr.com.homesoft.weatherapp.data.remote
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import timber.log.Timber
 import tr.com.homesoft.weatherapp.data.remote.api.ApixuWeatherApiService
 import tr.com.homesoft.weatherapp.data.remote.internal.NoConnectionException
 import tr.com.homesoft.weatherapp.data.remote.response.WeatherResponse
@@ -24,7 +24,7 @@ class WeatherNetworkDataSourceImpl(private val apixuWeatherApiService: ApixuWeat
             mDownloadedCurrentWeather.postValue(response)
 
         } catch (e: NoConnectionException) {
-            Log.e(TAG(), "NO internet connection")
+            Timber.tag(TAG()).e("NO internet connection")
         }
     }
 }
