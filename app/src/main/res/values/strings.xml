@@ -7,19 +7,17 @@
     <string name="pref_loc_default_value" translatable="false">Ankara</string>
     <string name="pref_unit_system_key" translatable="false">UNIT_SYSTEM_KEY</string>
 
-    <string name="format_min_max_temp_imperial">Min: <xliff:g>%1$1.1f\u00b0</xliff:g>F, Max: <xliff:g>
-        %2$1.1f\u00b0</xliff:g>F
-    </string>
+    <string name="format_min_max_temp_imperial">Min: %1$1.1f\u00b0F, Max: %2$1.1f\u00b0F</string>
 
-    <string name="format_temp_metric" translatable="false"><xliff:g>%1$1.1f\u00b0</xliff:g>C</string>
-    <string name="format_temp_imperial" translatable="false"><xliff:g>%1$1.1f\u00b0</xliff:g>F</string>
+    <string name="format_temp_metric" translatable="false">%1$1.1f\u00b0C</string>
+    <string name="format_temp_imperial" translatable="false">%1$1.1f\u00b0F</string>
 
     <string name="format_dateTime" translatable="false">%1$tA %1$td.%1$tm.%1$tY %1$tH:%1$tM</string>
 
-    <string name="format_humidity" translatable="false">%%<xliff:g>%1$d</xliff:g></string>
+    <string name="format_humidity">%1$d %%</string>
 
-    <string name="feels_like_temp_metric">Feels like %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>C</string>
-    <string name="feels_like_temp_imperial">Feels like %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>F</string>
+    <string name="feels_like_temp_metric">Feels like %1$1.1f\u00b0C</string>
+    <string name="feels_like_temp_imperial">Feels like %1$1.1f\u00b0F</string>
 
     <string name="format_pressure_metric" translatable="false">%1$1.0f mb</string>
     <string name="format_pressure_imperial" translatable="false">%1$1.0f in</string>
@@ -49,13 +47,11 @@
     <string name="pref_units_label_metric">Metric</string>
     <string name="pref_units_label_imperial">Imperial</string>
     <string name="pref_units_imperial_value" translatable="false">IMPERIAL</string>
-    <string name="format_min_max_temp_metric">Min: <xliff:g>%1$1.1f\u00b0</xliff:g>C, Max: <xliff:g>
-        %2$1.1f\u00b0</xliff:g>C
-    </string>
+    <string name="format_min_max_temp_metric">Min: %1$1.1f\u00b0C, Max: %2$1.1f\u00b0C</string>
     <string name="no_permissions">Please set location manually in settings</string>
     <string name="gps_status_enabled">GPS is Enabled</string>
     <string name="gps_status_disabled">GPS is Disabled</string>
     <string name="gps_required_title">GPS Required</string>
-    <string name="gps_required_body">Enable GPS otherwise location tracking won\\\'t work</string>
+    <string name="gps_required_body">Enable GPS otherwise default location will be used for weather forecast</string>
     <string name="action_settings">Settings</string>
 </resources>

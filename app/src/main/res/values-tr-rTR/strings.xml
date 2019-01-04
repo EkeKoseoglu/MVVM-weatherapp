@@ -17,14 +17,15 @@
     <string name="pref_unit_system_title">Ölçü Birimi</string>
     <string name="pref_units_label_metric">Metre</string>
     <string name="pref_units_label_imperial">İngiliz sistemi</string>
-    <string name="format_min_max_temp_metric">Min: <xliff:g>%1$1.1f\u00b0</xliff:g>C, Maks: <xliff:g>%2$1.1f\u00b0</xliff:g>C</string>
-    <string name="format_min_max_temp_imperial">Min: <xliff:g>%1$1.1f\u00b0</xliff:g>F, Maks: <xliff:g>%2$1.1f\u00b0</xliff:g>F</string>
-    <string name="feels_like_temp_metric">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>C</string>
-    <string name="feels_like_temp_imperial">"Hissedilen %1$1.1f<xliff:g id="degree">\u00b0</xliff:g>F</string>
+    <string name="format_min_max_temp_metric">Min: %1$1.1f\u00b0C, Maks: %2$1.1f\u00b0C</string>
+    <string name="format_min_max_temp_imperial">Min: %1$1.1f\u00b0F, Maks: %2$1.1f\u00b0F</string>
+    <string name="feels_like_temp_metric">"Hissedilen %1$1.1f\u00b0C</string>
+    <string name="feels_like_temp_imperial">"Hissedilen %1$1.1f\u00b0F</string>
     <string name="no_permissions">Lütfen Ayarlar menüsünden Konum kullanımını aktifleştirin</string>
     <string name="gps_status_enabled">GPS Etkin</string>
     <string name="gps_status_disabled">GPS Devredışı</string>
     <string name="gps_required_title">GPS Şart</string>
-    <string name="gps_required_body">GPS\'i tekinleştirin aksi takdirde konum bilgisi alınamayacak</string>
+    <string name="gps_required_body">Lütfen GPS\'i etkinleştirin aksi takdirde konum bilgisi alınamayacak</string>
     <string name="action_settings">Ayarlar</string>
+    <string name="format_humidity">%% %1$d</string>
 </resources>
