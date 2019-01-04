@@ -67,7 +67,6 @@ class CurrentFragment : Fragment() {
                 if (it == null) return@Observer
                 uiState.value = UIState.HasData
             })
-
         }
     }
 
