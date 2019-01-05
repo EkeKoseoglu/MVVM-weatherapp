@@ -57,9 +57,9 @@ class CurrentFragment : Fragment() {
                 }
             })
 
-            weatherLocation.observe(viewLifecycleOwner, Observer { location ->
-                if (location == null) return@Observer
-                updateLocation(location.name)
+            weatherLocation.observe(viewLifecycleOwner, Observer {
+                if (it == null) return@Observer
+                updateLocation(it.name)
                 updateDateToToday()
             })
 
@@ -67,6 +67,7 @@ class CurrentFragment : Fragment() {
                 if (it == null) return@Observer
                 uiState.value = UIState.HasData
             })
+
         }
     }
 
@@ -75,8 +76,7 @@ class CurrentFragment : Fragment() {
     }
 
     private fun updateDateToToday() {
-        (activity as? AppCompatActivity)?.supportActionBar
-            ?.subtitle = getString(R.string.today)
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.today)
     }
 
 }
