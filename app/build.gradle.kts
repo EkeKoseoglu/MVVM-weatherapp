@@ -37,7 +37,7 @@ dependencies {
     val navigationVersion = "1.0.0-alpha09"
     val roomVersion = "2.1.0-alpha03"
     val retrofitVersion = "2.3.0"
-    val coroutineVersion = "1.0.1"
+    val coroutinesVersion = "1.0.1"
     val koinVersion = "1.0.2"
     val glideVersion = "4.8.0"
     val lifecycleVersion = "2.0.0"
@@ -82,8 +82,8 @@ dependencies {
     // Kotlin & Coroutines
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     // Koin for Android
     implementation( "org.koin:koin-android:$koinVersion")
