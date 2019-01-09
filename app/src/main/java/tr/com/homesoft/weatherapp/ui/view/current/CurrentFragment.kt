@@ -15,7 +15,7 @@ import tr.com.homesoft.weatherapp.ui.state.UIState
 
 class CurrentFragment : Fragment() {
 
-    private val viewModel: CurrentViewModel by inject()
+    private val viewModel  by inject<CurrentViewModel>()
 
     private val binding: CurrentFragmentBinding by inflate(R.layout.current_fragment)
 

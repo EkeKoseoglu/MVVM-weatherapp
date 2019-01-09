@@ -19,7 +19,7 @@ import tr.com.homesoft.weatherapp.ui.state.UIState
 
 class FutureListFragment : Fragment() {
 
-    private val viewModel: FutureListViewModel by inject()
+    private val viewModel  by inject<FutureListViewModel>()
 
     private val binding: FutureListFragmentBinding by inflate(R.layout.future_list_fragment)
 
