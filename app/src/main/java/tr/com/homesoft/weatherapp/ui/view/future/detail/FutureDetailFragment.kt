@@ -12,7 +12,7 @@ import tr.com.homesoft.weatherapp.ui.delegates.inflate
 
 class FutureDetailFragment : Fragment() {
 
-    private val viewModel: FutureDetailViewModel by inject()
+    private val viewModel  by inject<FutureDetailViewModel>()
 
     private val binding: FutureDetailFragmentBinding by inflate(R.layout.future_detail_fragment)
 

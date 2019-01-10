@@ -14,6 +14,10 @@ import tr.com.homesoft.weatherapp.ui.unitsystem.UnitSystem
 
 class FutureDetailViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) : ScopedViewModel() {
 
+    private val unitSystem = MutableLiveData<UnitSystem>()
+
+    val metric: LiveData<Boolean> = Transformations.map(unitSystem) { it == UnitSystem.METRIC }
+
     val weatherLocation: LiveData<WeatherLocation>  = getLocation()
 
     private fun getLocation(): LiveData<WeatherLocation> {
@@ -30,18 +34,12 @@ class FutureDetailViewModel(private val repository: ForecastRepository, unitProv
 
     val loading = MutableLiveData<Boolean>()
 
-    private val unitSystem = MutableLiveData<UnitSystem>()
-    val metric: LiveData<Boolean> = Transformations.map(unitSystem) { it == UnitSystem.METRIC }
-
     private val mDetailForecast = MutableLiveData<UnitSpecificWeeklyForecastEntry>()
     val detailForecast: LiveData<UnitSpecificWeeklyForecastEntry> get() = mDetailForecast
 
     internal fun getDetailForecastByDate(date: String): LiveData<UnitSpecificWeeklyForecastEntry> =
         Transformations.switchMap(metric) { getWeatherByDate(date, it) }
 
-    init {
-        unitSystem.value = unitProvider.getUnitSystem()
-    }
 
     private fun getWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
         val result = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
@@ -59,4 +57,7 @@ class FutureDetailViewModel(private val repository: ForecastRepository, unitProv
         mDetailForecast.value = data
     }
 
+    init {
+        unitSystem.value = unitProvider.getUnitSystem()
+    }
 }
