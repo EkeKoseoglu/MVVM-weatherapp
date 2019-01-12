@@ -42,12 +42,16 @@ dependencies {
     val glideVersion = "4.8.0"
     val lifecycleVersion = "2.0.0"
 
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("androidx.appcompat:appcompat:1.1.0-alpha01")
     implementation("androidx.constraintlayout:constraintlayout:2.0.0-alpha3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
-    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+
 
     //Test helpers for LiveData
     testImplementation("androidx.arch.core:core-testing:$lifecycleVersion")
@@ -66,7 +70,7 @@ dependencies {
     // Room components
     implementation("androidx.room:room-runtime:$roomVersion")
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+
 
     //Gson
     implementation("com.google.code.gson:gson:2.8.5")
@@ -97,7 +101,7 @@ dependencies {
     //Glide components
     implementation( "com.github.bumptech.glide:glide:$glideVersion")
     implementation("com.github.bumptech.glide:okhttp3-integration:$glideVersion")
-    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+
 
     //Location
     implementation("com.google.android.gms:play-services-location:16.0.0")
@@ -112,5 +116,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
 }
 
+kapt {
+    useBuildCache = true
+}
 
 
