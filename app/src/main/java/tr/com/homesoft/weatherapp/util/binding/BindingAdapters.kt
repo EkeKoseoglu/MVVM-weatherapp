@@ -47,22 +47,6 @@ object BindingAdapters {
         visibility = if (shown) View.VISIBLE else View.GONE
     }
 
-
-    @JvmStatic
-    @BindingAdapter("minTemp", "maxTemp", "metric")
-    fun setFormatMixMaxTemp(view: TextView, minTemp: Double, maxTemp: Double, isMetric: Boolean) {
-
-        val context = view.context
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_min_max_temp_metric)
-                else getString(R.string.format_min_max_temp_imperial)
-            }.run { String.format(this, minTemp, maxTemp) }
-        }
-    }
-
     @JvmStatic
     @BindingAdapter("android:src")
     fun loadImage(image: ImageView, imageUrl: String?) {
@@ -87,97 +71,6 @@ object BindingAdapters {
             }
         }.let {
             setImageResource(it)
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatTemp", "metric")
-    fun setFormatTemp(view: TextView, temperature: Double, isMetric: Boolean) {
-
-        val context = view.context
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_temp_metric)
-                else getString(R.string.format_temp_imperial)
-            }.run { String.format(this, temperature) }
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatWind", "metric")
-    fun formatWind(view: TextView, windSpeed: Double, isMetric: Boolean) {
-
-        val context = view.context
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_wind_speed_metric)
-                else getString(R.string.format_wind_speed_imperial)
-            }.run { String.format(this, windSpeed) }
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatPrecipitaion", "metric")
-    fun formatPrecipitation(view: TextView, precip: Double, isMetric: Boolean) {
-
-        val context = view.context
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_precip_metric)
-                else getString(R.string.format_precip_imperial)
-            }.run { String.format(this, precip) }
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatVisibilityDistance", "metric")
-    fun formatVisibilityDistance(view: TextView, visibilityDistance: Double, isMetric: Boolean) {
-
-        val context = view.context
-
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_visibility_metric)
-                else getString(R.string.format_visibility_imperial)
-            }.run { String.format(this, visibilityDistance) }
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatPressure", "metric")
-    fun formatPressure(view: TextView, pressure: Double, isMetric: Boolean) {
-        val context = view.context
-
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.format_pressure_metric)
-                else getString(R.string.format_pressure_imperial)
-            }.run { String.format(this, pressure) }
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("formatFeelsLikeTemperature", "metric")
-    fun formatFeelsLikeTemperature(view: TextView, feelsLikeTemperature: Double, isMetric: Boolean) {
-        val context = view.context
-
-
-        with(context) {
-
-            view.text = with(resources) {
-                if (isMetric) getString(R.string.feels_like_temp_metric)
-                else getString(R.string.feels_like_temp_imperial)
-            }.run { String.format(this, feelsLikeTemperature) }
         }
     }
 

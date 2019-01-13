@@ -51,8 +51,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintTop_toTopOf="@+id/guideline"/>
         <TextView
-                app:formatTemp="@{obj.temperature}"
-                app:metric="@{safeUnbox(isMetric)}"
+                android:text="@{@string/format_temp(obj.temperature, safeUnbox(isMetric) ? @string/celsius : @string/fahrenheit)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
