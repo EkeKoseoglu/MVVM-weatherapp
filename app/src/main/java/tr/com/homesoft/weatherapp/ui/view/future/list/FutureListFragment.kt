@@ -70,7 +70,7 @@ class FutureListFragment : Fragment() {
                 }
             })
 
-            metric.observe(viewLifecycleOwner, Observer {
+            isMetric.observe(viewLifecycleOwner, Observer {
                 forecastAdapter.isMetric = it
             })
 
