@@ -11,17 +11,17 @@ import tr.com.homesoft.weatherapp.util.extensions.TAG
 class WeatherNetworkDataSourceImpl(private val apixuWeatherApiService: ApixuWeatherApiService) :
     WeatherNetworkDataSource {
 
-    private val mDownloadedCurrentWeather = MutableLiveData<WeatherResponse>()
+    private val mDownloadedWeather = MutableLiveData<WeatherResponse>()
 
-    override val downloadedCurrentWeather: LiveData<WeatherResponse>
-        get() = mDownloadedCurrentWeather
+    override val downloadedWeather: LiveData<WeatherResponse>
+        get() = mDownloadedWeather
 
-    override suspend fun fetchCurrentWeather(location: String, lang: String) {
+    override suspend fun fetchWeather(location: String, lang: String) {
         try {
             val response =
                 apixuWeatherApiService.getForecastsByCity(location, lang).await()
 
-            mDownloadedCurrentWeather.postValue(response)
+            mDownloadedWeather.postValue(response)
 
         } catch (e: NoConnectionException) {
             Timber.tag(TAG()).e("NO internet connection")

@@ -5,7 +5,7 @@ import tr.com.homesoft.weatherapp.data.remote.response.WeatherResponse
 
 interface WeatherNetworkDataSource {
 
-    val downloadedCurrentWeather: LiveData<WeatherResponse>
+    val downloadedWeather: LiveData<WeatherResponse>
 
-    suspend fun fetchCurrentWeather(location: String, lang: String)
+    suspend fun fetchWeather(location: String, lang: String)
 }
