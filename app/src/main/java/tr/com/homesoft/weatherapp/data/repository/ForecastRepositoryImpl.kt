@@ -25,12 +25,12 @@ class ForecastRepositoryImpl(
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
-    private var lastWeatherLocation: WeatherLocation? = null
+    private lateinit var lastWeatherLocation: WeatherLocation
 
     init {
-        weatherNetworkDataSource.downloadedCurrentWeather.observeForever { newCurrentWeather ->
-            persistFetchedCurrentWeather(newCurrentWeather)
-            lastWeatherLocation = newCurrentWeather.weatherLocation
+        weatherNetworkDataSource.downloadedWeather.observeForever {
+            persistFetchedWeather(it)
+            lastWeatherLocation = it.weatherLocation
         }
 
         locationProvider.locationLiveData.observeForever {
@@ -56,11 +56,7 @@ class ForecastRepositoryImpl(
     override suspend fun getWeeklyWeather(isMetric: Boolean): LiveData<out List<UnitSpecificWeeklyForecastEntry>> =
 
         withContext(Dispatchers.IO) {
-            //Fetch data from the Internet
-            //initWeatherData()
-
             //Load persisted data from db
-
             with(weeklyWeatherDao) {
                 if (isMetric) metricWeeklyForecast
                 else imperialWeatherForecast
@@ -70,7 +66,6 @@ class ForecastRepositoryImpl(
 
     override suspend fun getCurrentWeather(isMetric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> =
         withContext(Dispatchers.IO) {
-            //initWeatherData()
             with(currentWeatherDao) {
                 if (isMetric) weatherMetric
                 else weatherImperial
@@ -80,11 +75,11 @@ class ForecastRepositoryImpl(
 
     override suspend fun getWeatherLocation(): LiveData<WeatherLocation> =
         withContext(Dispatchers.IO) {
-            return@withContext locationDao.weatherLocation
+            locationDao.weatherLocation
         }
 
 
-    private fun persistFetchedCurrentWeather(fetchedCurrentWeather: WeatherResponse) {
+    private fun persistFetchedWeather(fetchedCurrentWeather: WeatherResponse) {
         //Persist Fetched Data from Internet
         CoroutineScope(Dispatchers.IO).launch {
             locationDao.upsert(fetchedCurrentWeather.weatherLocation)
@@ -97,19 +92,19 @@ class ForecastRepositoryImpl(
 
     private suspend fun initWeatherData() {
 
-        //If last found location is null or device location is different than the last found location
-        //fetch data from the Internet and return from the function
-        if (null == lastWeatherLocation ||
-            locationProvider.hasLocationChanged(lastWeatherLocation!!)
+        //If last found location, which is a lateinit var, is not initialized or device's location is different than
+        // the last found location, fetch data from the Internet and return from the function
+
+        if (::lastWeatherLocation.isInitialized.not() || locationProvider.hasLocationChanged(lastWeatherLocation)
         ) {
-            fetchCurrentWeather()
+            fetchWeather()
             return
         }
 
         //Check if fetching of data is needed
         //If needed, fetch data from the Internet
-        if (isFetchCurrentNeeded(lastWeatherLocation!!.zonedDateTime))
-            fetchCurrentWeather()
+        if (isFetchCurrentNeeded(lastWeatherLocation.zonedDateTime))
+            fetchWeather()
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime: ZonedDateTime): Boolean {
@@ -117,9 +112,9 @@ class ForecastRepositoryImpl(
         return lastFetchTime.isBefore(thirtyMinutesAgo)
     }
 
-    private suspend fun fetchCurrentWeather() {
+    private suspend fun fetchWeather() {
         //Fetch data from the Internet
-        weatherNetworkDataSource.fetchCurrentWeather(
+        weatherNetworkDataSource.fetchWeather(
             locationProvider.getPreferredLocation(),
             Locale.getDefault().language
         )
