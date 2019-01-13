@@ -28,10 +28,11 @@ class LocationProviderImpl(
     }
 
 
-    private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) = if (isUsingDeviceLocation())
-        false
-    else
-        getCustomLocationName().toLowerCase() != lastWeatherLocation.name.toLowerCase()
+    private fun hasCustomLocationChanged(lastWeatherLocation: WeatherLocation) =
+        if (isUsingDeviceLocation())
+            false
+        else
+            getCustomLocationName().toLowerCase() != lastWeatherLocation.name.toLowerCase()
 
 
     private fun getCustomLocationName() =
