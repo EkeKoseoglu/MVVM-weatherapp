@@ -8,6 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 import tr.com.homesoft.weatherapp.R
 import tr.com.homesoft.weatherapp.util.extensions.getParentActivity
 import tr.com.homesoft.weatherapp.util.extensions.loadUrl
@@ -15,21 +17,9 @@ import tr.com.homesoft.weatherapp.util.extensions.loadUrl
 object BindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("formatDate")
-    fun formatDate(view: TextView, date: String) {
-        //view.text = date.formatDate("dd.MM.yyyy")
-    }
-
-    @JvmStatic
     @BindingAdapter("dateFormat")
     fun dateFormat(view: TextView, date: LocalDate) {
-        view.text = date.toString()
-    }
-
-    @JvmStatic
-    @BindingAdapter("visibleGone")
-    fun showHide(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
+        view.text = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
     }
 
     @JvmStatic
