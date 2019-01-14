@@ -85,7 +85,7 @@ class ForecastRepositoryImpl(
             locationDao.upsert(fetchedCurrentWeather.weatherLocation)
             currentWeatherDao.upsert(fetchedCurrentWeather.currentWeatherEntry)
             weeklyWeatherDao.deleteAll()
-            weeklyWeatherDao.upsertAll(*fetchedCurrentWeather.forecast.weeklyForcastList.toTypedArray())
+            weeklyWeatherDao.upsertAll(*fetchedCurrentWeather.forecast.weeklyForecastList.toTypedArray())
         }
     }
 
