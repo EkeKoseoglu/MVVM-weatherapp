@@ -1,10 +1,11 @@
 package tr.com.homesoft.weatherapp.util.extensions
 
-import android.util.Log
+import timber.log.Timber
 
-inline fun <reified T> T.logd(message: () -> String) = Log.d(T::class.TAG(), message())
+inline fun <reified T> T.logd(message: () -> String) = Timber.tag(T::class.TAG()).d(message())
 
-inline fun <reified T> T.loge(error: Throwable, message: () -> String) = Log.d(T::class.TAG(), message(), error)
+
+inline fun <reified T> T.loge(error: Throwable, message: () -> String) = Timber.tag(T::class.TAG()).e(error, message())
 
 
 /**
