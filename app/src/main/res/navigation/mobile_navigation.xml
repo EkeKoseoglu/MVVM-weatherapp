@@ -14,13 +14,13 @@
               tools:layout="@layout/future_list_fragment">
         <action android:id="@+id/action_futureListFragment_to_futureDetailFragment"
                 app:destination="@id/futureDetailFragment">
-            <argument app:argType="string" android:name="date"/>
+            <argument android:name="date_epoch" app:argType="long"/>
         </action>
     </fragment>
     <fragment android:id="@+id/futureDetailFragment"
               android:name="tr.com.homesoft.weatherapp.ui.view.future.detail.FutureDetailFragment"
               tools:layout="@layout/future_detail_fragment">
-        <argument android:name="date" app:argType="string"/>
+        <argument android:name="date_epoch" app:argType="long"/>
     </fragment>
     <fragment android:id="@+id/settings" android:name="tr.com.homesoft.weatherapp.ui.view.settings.Settings"/>
 </navigation>
