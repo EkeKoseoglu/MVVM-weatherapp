@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import tr.com.homesoft.weatherapp.data.local.entity.DayForecast.Companion.DAYFORECAST
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.CONDITION_ICON
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.CONDITION_TEXT
+import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.DATE_EPOCH
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.DATE_TIME
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.HUMIDITY
 
@@ -39,7 +40,10 @@ data class MetricWeeklyForecastEntry(
     override val temperature: Double,
 
     @ColumnInfo(name = WIND_KpH)
-    override val windSpeed: Double
+    override val windSpeed: Double,
+
+    @ColumnInfo(name = DATE_EPOCH)
+    override val dateEpoch: Long
 ) : UnitSpecificWeeklyForecastEntry {
 
 

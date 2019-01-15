@@ -13,18 +13,17 @@ import tr.com.homesoft.weatherapp.ui.base.WeatherViewModel
 class FutureDetailViewModel(private val repository: ForecastRepository, unitProvider: UnitProvider) :
     WeatherViewModel(unitProvider, repository) {
 
-
     private val mDetailForecast = MutableLiveData<UnitSpecificWeeklyForecastEntry>()
     val detailForecast: LiveData<UnitSpecificWeeklyForecastEntry> get() = mDetailForecast
 
-    internal fun getDetailForecastByDate(date: String): LiveData<UnitSpecificWeeklyForecastEntry> =
-        Transformations.switchMap(isMetric) { getWeatherByDate(date, it) }
+    internal fun getDetailForecastByDate(dateEpoch: Long): LiveData<UnitSpecificWeeklyForecastEntry> =
+        Transformations.switchMap(isMetric) { getWeatherByDate(dateEpoch, it) }
 
 
-    private fun getWeatherByDate(date: String, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
+    private fun getWeatherByDate(dateEpoch: Long, isMetric: Boolean): LiveData<UnitSpecificWeeklyForecastEntry> {
         val result = MediatorLiveData<UnitSpecificWeeklyForecastEntry>()
         launch {
-            val data = repository.getDetailWeatherByDate(date, isMetric)
+            val data = repository.getDetailWeatherByDate(dateEpoch, isMetric)
             result.addSource(data) {
                 result.postValue(it)
                 result.removeSource(data)

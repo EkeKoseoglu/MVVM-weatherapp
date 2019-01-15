@@ -7,6 +7,7 @@ import tr.com.homesoft.weatherapp.data.local.entity.DayForecast.Companion.DAYFOR
 interface UnitSpecificWeeklyForecastEntry {
 
     val date: LocalDate
+    val dateEpoch: Long
     val conditionText: String
     val conditionIconUrl: String
     val maxTemperature: Double
@@ -19,6 +20,7 @@ interface UnitSpecificWeeklyForecastEntry {
 
     companion object {
         const val DATE_TIME = "date"
+        const val DATE_EPOCH = "dateEpoch"
         const val HUMIDITY = DAYFORECAST + "avghumidity"
         const val CONDITION_TEXT = DAYFORECAST + CONDITION_PREFIX + "text"
         const val CONDITION_ICON = DAYFORECAST + CONDITION_PREFIX + "icon"

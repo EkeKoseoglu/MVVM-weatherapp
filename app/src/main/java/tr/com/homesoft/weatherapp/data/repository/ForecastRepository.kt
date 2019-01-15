@@ -11,7 +11,7 @@ interface ForecastRepository {
 
     suspend fun getWeeklyWeather(isMetric: Boolean): LiveData<out List<UnitSpecificWeeklyForecastEntry>>
 
-    suspend fun getDetailWeatherByDate(date: String, isMetric: Boolean): LiveData<out UnitSpecificWeeklyForecastEntry>
+    suspend fun getDetailWeatherByDate(dateEpoch: Long, isMetric: Boolean): LiveData<out UnitSpecificWeeklyForecastEntry>
 
     suspend fun getWeatherLocation(): LiveData<WeatherLocation>
 

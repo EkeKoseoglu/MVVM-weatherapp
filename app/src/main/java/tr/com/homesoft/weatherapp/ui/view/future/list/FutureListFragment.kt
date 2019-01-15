@@ -19,7 +19,7 @@ import tr.com.homesoft.weatherapp.ui.state.UIState
 
 class FutureListFragment : Fragment() {
 
-    private val viewModel  by inject<FutureListViewModel>()
+    private val viewModel by inject<FutureListViewModel>()
 
     private val binding: FutureListFragmentBinding by inflate(R.layout.future_list_fragment)
 
@@ -97,9 +97,9 @@ class FutureListFragment : Fragment() {
     }
 
     private fun detailItemClicked(unitSpecificWeeklyForecastEntry: Any) {
-        val date = (unitSpecificWeeklyForecastEntry as UnitSpecificWeeklyForecastEntry).date.toString()
+        val dateEpoch = (unitSpecificWeeklyForecastEntry as UnitSpecificWeeklyForecastEntry).dateEpoch
         val direction =
-            FutureListFragmentDirections.actionFutureListFragmentToFutureDetailFragment(date)
+            FutureListFragmentDirections.actionFutureListFragmentToFutureDetailFragment(dateEpoch)
         findNavController().navigate(direction)
     }
 

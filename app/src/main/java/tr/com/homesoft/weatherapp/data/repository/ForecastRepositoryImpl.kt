@@ -42,13 +42,13 @@ class ForecastRepositoryImpl(
 
 
     override suspend fun getDetailWeatherByDate(
-        date: String,
+        dateEpoch: Long,
         isMetric: Boolean
     ): LiveData<out UnitSpecificWeeklyForecastEntry> =
 
         withContext(Dispatchers.IO) {
             with(weeklyWeatherDao) {
-                if (isMetric) findMetricByDate(date) else findImperialByDate(date)
+                if (isMetric) findMetricByDate(dateEpoch) else findImperialByDate(dateEpoch)
             }
         }
 

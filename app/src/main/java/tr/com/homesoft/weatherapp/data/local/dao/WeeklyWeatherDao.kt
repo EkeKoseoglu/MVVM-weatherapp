@@ -6,6 +6,7 @@ import tr.com.homesoft.weatherapp.data.local.entity.WeeklyForecastEntry
 import tr.com.homesoft.weatherapp.data.local.entity.WeeklyForecastEntry.Companion.WEEKLY_FORECAST_TABLE_NAME
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.ImperialWeeklyForecastEntry
 import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.MetricWeeklyForecastEntry
+import tr.com.homesoft.weatherapp.data.local.unitlocalized.weekly.UnitSpecificWeeklyForecastEntry.Companion.DATE_EPOCH
 
 @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
 @Dao
@@ -24,14 +25,11 @@ interface WeeklyWeatherDao {
     @get:Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME")
     val imperialWeatherForecast: LiveData<List<ImperialWeeklyForecastEntry>>
 
-    @Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME WHERE $COLUMN_DATE = :date")
-    fun findMetricByDate(date: String): LiveData<MetricWeeklyForecastEntry>
+    @Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME WHERE $DATE_EPOCH = :dateEpoch")
+    fun findMetricByDate(dateEpoch: Long): LiveData<MetricWeeklyForecastEntry>
 
-    @Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME WHERE $COLUMN_DATE = :date")
-    fun findImperialByDate(date: String): LiveData<ImperialWeeklyForecastEntry>
+    @Query("SELECT * FROM $WEEKLY_FORECAST_TABLE_NAME WHERE $DATE_EPOCH = :dateEpoch")
+    fun findImperialByDate(dateEpoch: Long): LiveData<ImperialWeeklyForecastEntry>
 
 
-    companion object {
-        const val COLUMN_DATE = "date"
-    }
 }
