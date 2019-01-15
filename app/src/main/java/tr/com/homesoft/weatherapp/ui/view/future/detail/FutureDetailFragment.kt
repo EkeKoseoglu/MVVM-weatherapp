@@ -28,6 +28,8 @@ class FutureDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        if (arguments == null) return
+
         date = FutureDetailFragmentArgs.fromBundle(arguments!!).date
 
         with(binding) {
