@@ -31,7 +31,7 @@ class FutureDetailFragment : Fragment() {
         date = FutureDetailFragmentArgs.fromBundle(arguments!!).date
 
         with(binding) {
-            vm = viewModel.apply { loading.value = true }
+            vm = viewModel.apply { loading.set(true) }
             setLifecycleOwner(this@FutureDetailFragment.activity)
         }
 

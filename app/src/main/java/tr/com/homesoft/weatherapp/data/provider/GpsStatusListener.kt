@@ -38,6 +38,7 @@ class GpsStatusListener(private val context: Context) : LiveData<GpsStatus>() {
             postValue(GpsStatus.Disabled())
         }
 
+    @Suppress("DEPRECATION")
     private fun isLocationEnabled() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.getSystemService(LocationManager::class.java)
